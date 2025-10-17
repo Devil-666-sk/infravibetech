@@ -65,147 +65,66 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="bg-premium relative w-full text-white py-24 px-6 md:px-12 lg:px-20 overflow-hidden"
+      className="bg-premium relative w-full text-white py-16 md:py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto text-center relative z-10">
-        {/* ==== Heading ==== */}
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-          Our{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
-            Services
-          </span>
-        </h2>
-        <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-16">
-          Explore a complete range of digital services designed to empower your business — from web design to marketing, support, and beyond.
+        {/* ==== Premium Animated Heading ==== */}
+        <motion.h2
+          className="text-4xl md:text-5xl font-extrabold leading-tight"
+          initial={{ backgroundPositionX: "0%" }}
+          animate={{ backgroundPositionX: "200%" }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+            backgroundSize: "200%",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          Our <span className="text-white">Services</span>
+        </motion.h2>
+
+        {/* Gradient Line Underline */}
+        <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
+
+        <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-12">
+          Explore a complete range of digital services designed to empower your
+          business — from web design to marketing, support, and beyond.
         </p>
 
-        {/* ==== Custom Responsive Layout ==== */}
-        <div className="flex flex-col items-center gap-10">
-          {/* ===== Top Row (2 on tablet, 3 on desktop) ===== */}
-          <div className="flex flex-wrap justify-center gap-10 w-full">
+        {/* ==== Services Grid Layout ==== */}
+        <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-wrap justify-center gap-8 w-full">
             {services.slice(0, 2).map((service) => (
-              <motion.div
+              <ServiceCard
                 key={service.title}
-                whileHover={{ y: -8 }}
+                service={service}
                 onClick={() => setSelectedService(service.title)}
-                className="group bg-white/10 border border-white/10 rounded-2xl p-8 
-                           w-full sm:w-[90%] md:w-[45%] lg:w-[340px]
-                           cursor-pointer backdrop-blur-xl 
-                           hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
-                           shadow-lg hover:shadow-teal-500/20"
-              >
-                <div className="flex justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">
-                  {service.title}
-                </h3>
-                <p
-                  className="text-gray-300 text-sm leading-relaxed line-clamp-2 overflow-hidden text-ellipsis"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                  }}
-                >
-                  {service.desc}
-                </p>
-              </motion.div>
+              />
             ))}
-
-            {/* Show 3rd card (Digital Marketing) only on large screens in top row */}
             <div className="hidden lg:block">
-              <motion.div
-                key={services[2].title}
-                whileHover={{ y: -8 }}
+              <ServiceCard
+                service={services[2]}
                 onClick={() => setSelectedService(services[2].title)}
-                className="group bg-white/10 border border-white/10 rounded-2xl p-8 
-                           w-full lg:w-[340px]
-                           cursor-pointer backdrop-blur-xl 
-                           hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
-                           shadow-lg hover:shadow-teal-500/20"
-              >
-                <div className="flex justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
-                  {services[2].icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">
-                  {services[2].title}
-                </h3>
-                <p
-                  className="text-gray-300 text-sm leading-relaxed line-clamp-2 overflow-hidden text-ellipsis"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                  }}
-                >
-                  {services[2].desc}
-                </p>
-              </motion.div>
+              />
             </div>
           </div>
 
-          {/* ===== Middle Single Card (Digital Marketing for tablet only) ===== */}
-          <div className="hidden md:flex lg:hidden justify-center w-full">
-            <motion.div
-              key={services[2].title + "-tablet"}
-              whileHover={{ y: -8 }}
+          <div className="w-full flex justify-center lg:hidden">
+            <ServiceCard
+              service={services[2]}
               onClick={() => setSelectedService(services[2].title)}
-              className="group bg-white/10 border border-white/10 rounded-2xl p-8 
-                         w-[90%] md:w-[45%]
-                         cursor-pointer backdrop-blur-xl 
-                         hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
-                         shadow-lg hover:shadow-teal-500/20"
-            >
-              <div className="flex justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
-                {services[2].icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {services[2].title}
-              </h3>
-              <p
-                className="text-gray-300 text-sm leading-relaxed line-clamp-2 overflow-hidden text-ellipsis"
-                style={{
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 2,
-                }}
-              >
-                {services[2].desc}
-              </p>
-            </motion.div>
+            />
           </div>
 
-          {/* ===== Bottom Row (2 cards) ===== */}
-          <div className="flex flex-wrap justify-center gap-10 w-full">
+          <div className="flex flex-wrap justify-center gap-8 w-full">
             {services.slice(3, 5).map((service) => (
-              <motion.div
+              <ServiceCard
                 key={service.title}
-                whileHover={{ y: -8 }}
+                service={service}
                 onClick={() => setSelectedService(service.title)}
-                className="group bg-white/10 border border-white/10 rounded-2xl p-8 
-                           w-full sm:w-[90%] md:w-[45%] lg:w-[340px]
-                           cursor-pointer backdrop-blur-xl 
-                           hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
-                           shadow-lg hover:shadow-teal-500/20"
-              >
-                <div className="flex justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">
-                  {service.title}
-                </h3>
-                <p
-                  className="text-gray-300 text-sm leading-relaxed line-clamp-2 overflow-hidden text-ellipsis"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                  }}
-                >
-                  {service.desc}
-                </p>
-              </motion.div>
+              />
             ))}
           </div>
         </div>
@@ -244,7 +163,7 @@ export default function ServicesSection() {
                     <span className="text-teal-400">{selectedService}</span>
                   </h3>
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-3">
                     <input
                       type="text"
                       placeholder="Your Name"
@@ -301,3 +220,47 @@ export default function ServicesSection() {
     </section>
   );
 }
+
+/* ==== Card Component with Animated Gradient Title ==== */
+const ServiceCard = ({ service, onClick }: any) => (
+  <motion.div
+    whileHover={{ y: -8, scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 300 }}
+    onClick={onClick}
+    className="group bg-white/10 border border-white/10 rounded-2xl p-6 
+               w-full sm:w-[90%] md:w-[45%] lg:w-[320px] 
+               min-h-[260px] flex flex-col justify-between
+               cursor-pointer backdrop-blur-xl 
+               hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
+               shadow-lg hover:shadow-teal-500/20 text-center"
+  >
+    <div className="flex justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+      {service.icon}
+    </div>
+
+    <div>
+      {/* Animated gradient text same as “Our” */}
+      <motion.h3
+        className="text-lg font-semibold mb-2 leading-snug"
+        initial={{ backgroundPositionX: "0%" }}
+        animate={{ backgroundPositionX: "200%" }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        style={{
+          backgroundImage:
+            "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+          backgroundSize: "200%",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+        }}
+      >
+        {service.title}
+      </motion.h3>
+
+      <p className="text-gray-300 text-sm leading-relaxed">{service.desc}</p>
+    </div>
+
+    <motion.div
+      className="h-[2px] w-0 group-hover:w-full mx-auto mt-4 bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400 transition-all duration-500"
+    />
+  </motion.div>
+);

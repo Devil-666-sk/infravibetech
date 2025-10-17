@@ -45,6 +45,7 @@ export default function ChatBot() {
             "📱 Social Media Maintenance",
             "📢 Digital Marketing Solutions",
             "🛠️ Tech Support & Maintenance",
+            "💻 Laptop & PC on Rent",
           ],
         };
         break;
