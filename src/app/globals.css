@@ -192,3 +192,45 @@ p {
     transform: translateY(0);
   }
 }
+
+/* ---------------------------
+   🌌 Global Gradient Background (Reusable – Services Style)
+--------------------------- */
+.bg-premium {
+  position: relative;
+  background: linear-gradient(to bottom, #041b2e, #071f35, #020b18);
+  overflow: hidden;
+  color: white;
+}
+
+.bg-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/cubes.png");
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.bg-premium::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(20, 184, 166, 0.1),
+    rgba(59, 130, 246, 0.1),
+    rgba(147, 51, 234, 0.1)
+  );
+  animation: bgPulse 8s infinite alternate;
+  z-index: 0;
+}
+
+@keyframes bgPulse {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
