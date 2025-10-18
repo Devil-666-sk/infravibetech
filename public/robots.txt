@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://infravibetech.com
+
+# Sitemaps
+Sitemap: https://infravibetech.com/sitemap.xml
