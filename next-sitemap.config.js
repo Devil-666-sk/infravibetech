@@ -1,20 +1,19 @@
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-  siteUrl: "https://infravibetech.com",
-  generateRobotsTxt: true,
-  generateIndexSitemap: true, // ✅ allow index sitemap
+  siteUrl: "https://infravibetech.com", // ✅ Live domain
+  generateRobotsTxt: true,              // Robots.txt auto-generate karega
+  generateIndexSitemap: false,          // ❌ Single sitemap.xml (no sitemap-0.xml)
   sitemapSize: 5000,
-  outDir: "public",
+  outDir: "public",                     // Sitemap generate hoga yahi
   changefreq: "weekly",
   priority: 0.8,
-  autoLastmod: true,
-  transform: async (config, path) => {
-    return {
-      loc: path,
-      changefreq: config.changefreq,
-      priority: config.priority,
-      lastmod: new Date().toISOString(),
-    };
+
+  // ✅ Extra options (important)
+  exclude: ["/404", "/_error", "/server-sitemap.xml"], // Unwanted pages exclude
+  robotsTxtOptions: {
+    additionalSitemaps: [
+      "https://infravibetech.com/sitemap.xml", // Explicit sitemap reference
+    ],
   },
 };
 
