@@ -1,6 +1,12 @@
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
-  siteUrl: 'https://infravibetech.com',
-  generateRobotsTxt: true,
-  sitemapSize: 7000,
+const config = {
+  siteUrl: "https://infravibetech.com", // 🔹 apni live domain
+  generateRobotsTxt: true, // Robots.txt auto generate karega
+  generateIndexSitemap: false, // ❌ index sitemap (sitemap-0.xml) disable
+  sitemapSize: 5000,
+  outDir: "public", // sitemap yahi generate karega
+  changefreq: "weekly",
+  priority: 0.8,
 };
+
+export default config;
