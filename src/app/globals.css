@@ -234,3 +234,7 @@ p {
     opacity: 0.25;
   }
 }
+
+.cookie-banner {
+  font-family: "Poppins", "Montserrat", sans-serif;
+}
