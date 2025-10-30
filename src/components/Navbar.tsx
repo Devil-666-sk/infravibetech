@@ -28,13 +28,14 @@ export default function Navbar() {
                  bg-transparent backdrop-blur-xl border-b border-white/10 
                  shadow-[0_0_25px_rgba(0,200,130,0.2)]"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-5 py-3 md:px-8">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2.5 sm:px-6 md:px-8">
 
         {/* ---------- LEFT: Logo + Brand ---------- */}
         <Link
           href="/"
-          className="relative flex items-center space-x-3 group cursor-pointer"
+          className="relative flex items-center space-x-2 group cursor-pointer"
         >
+          {/* Animated Glow Around Logo */}
           <motion.div
             className="absolute -inset-1 rounded-full bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 blur-lg opacity-40 group-hover:opacity-70 transition-all duration-500"
             animate={{
@@ -48,31 +49,33 @@ export default function Navbar() {
             }}
           />
 
-          <div className="relative w-12 h-12 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-[0_0_20px_rgba(0,200,130,0.35)] flex items-center justify-center overflow-hidden">
+          {/* Logo */}
+          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-[0_0_20px_rgba(0,200,130,0.35)] flex items-center justify-center overflow-hidden">
             <Image
               src={logo}
               alt="InfraVibe Tech Logo"
-              width={38}
-              height={38}
+              width={40}
+              height={40}
               className="rounded-full z-10 transition-transform duration-500 group-hover:scale-110"
             />
           </div>
 
-          <div className="flex flex-col leading-tight">
+          {/* Brand Text */}
+          <div className="flex flex-col leading-tight ml-1">
             <div className="flex items-baseline space-x-1">
-              <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 tracking-wide group-hover:brightness-125">
+              <h1 className="text-sm sm:text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 tracking-wide group-hover:brightness-125">
                 InfraVibe
               </h1>
-              <span className="text-sm font-semibold text-gray-200">Tech</span>
+              <span className="text-[10px] sm:text-xs font-semibold text-gray-200">Tech</span>
             </div>
-            <p className="text-[10px] text-gray-400 font-medium">
+            <p className="text-[7px] sm:text-[8px] text-gray-400 font-medium tracking-wider mt-[1px]">
               Empowering Businesses Digitally
             </p>
           </div>
         </Link>
 
         {/* ---------- RIGHT: Desktop Menu ---------- */}
-        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-base font-medium">
+        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm xl:text-base font-medium">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
@@ -120,23 +123,23 @@ export default function Navbar() {
           <button
             aria-label="Menu Toggle"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="relative w-12 h-12 flex items-center justify-center 
-                       rounded-2xl backdrop-blur-md border border-white/10 
-                       bg-white/5 shadow-[0_0_20px_rgba(0,200,150,0.25)]
-                       hover:shadow-[0_0_35px_rgba(0,200,150,0.4)] 
+            className="relative w-10 h-10 flex items-center justify-center 
+                       rounded-xl backdrop-blur-md border border-white/10 
+                       bg-white/5 shadow-[0_0_15px_rgba(0,200,150,0.25)]
+                       hover:shadow-[0_0_30px_rgba(0,200,150,0.4)] 
                        transition-all duration-300 group"
           >
             <motion.div
-              animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: -6 }}
-              className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
+              animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: -6 }}
+              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
             />
             <motion.div
               animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
             />
             <motion.div
-              animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 6 }}
-              className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
+              animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 6 }}
+              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
             />
           </button>
         </div>
@@ -146,24 +149,24 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -40 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.4 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35 }}
             className="lg:hidden absolute top-[70px] left-0 w-full 
-                       bg-white text-gray-900 backdrop-blur-xl
-                       border-t border-gray-200 shadow-[0_0_25px_rgba(0,0,0,0.1)]
-                       rounded-b-3xl overflow-hidden"
+                       bg-white/95 text-gray-900 backdrop-blur-xl
+                       border-t border-gray-200 shadow-[0_0_25px_rgba(0,0,0,0.08)]
+                       rounded-b-2xl overflow-hidden"
           >
-            <ul className="flex flex-col items-center gap-4 py-6 text-lg font-medium">
+            <ul className="flex flex-col items-center gap-3 py-5 text-base font-medium">
               {navLinks.map((item, index) => {
                 const isActive = pathname === item.path;
                 return (
                   <motion.li
                     key={item.name}
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 * index }}
+                    transition={{ delay: 0.06 * index }}
                   >
                     <Link
                       href={item.path}
@@ -182,12 +185,12 @@ export default function Navbar() {
               <motion.li
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.4 }}
               >
                 <Link
                   href="/contact"
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-5 py-2 text-white bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 shadow-[0_0_30px_rgba(0,200,150,0.4)] text-sm font-semibold"
+                  className="rounded-lg px-5 py-2 text-white bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 shadow-[0_0_25px_rgba(0,200,150,0.4)] text-sm font-semibold"
                 >
                   Get Quote
                 </Link>

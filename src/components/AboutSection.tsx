@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import aboutImg from "@/assets/logo.png"; // Replace with your real InfraVibe image
+import aboutImg from "@/assets/logo.png";
 
 export default function AboutSection() {
   return (
@@ -15,6 +15,7 @@ export default function AboutSection() {
       <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-gradient-to-l from-teal-400/20 to-blue-500/20 blur-[180px] rounded-full"></div>
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:80px_80px] opacity-10"></div>
 
+      {/* === Main Container === */}
       <div className="relative max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 z-10">
         {/* === Left: About Image === */}
         <motion.div
@@ -24,7 +25,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="w-full lg:w-1/2 flex justify-center"
         >
-          <div className="relative w-80 h-80 md:w-[400px] md:h-[400px] rounded-3xl bg-white/10 border border-white/20 backdrop-blur-2xl shadow-[0_0_60px_-10px_rgba(45,212,191,0.5)] overflow-hidden group">
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-[380px] md:h-[380px] rounded-3xl bg-white/10 border border-white/20 backdrop-blur-2xl shadow-[0_0_60px_-10px_rgba(45,212,191,0.5)] overflow-hidden group">
             <Image
               src={aboutImg}
               alt="About InfraVibe Tech"
@@ -45,7 +46,7 @@ export default function AboutSection() {
         >
           {/* === Animated Gradient Heading === */}
           <motion.h2
-            className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight"
             initial={{ backgroundPositionX: "0%" }}
             animate={{ backgroundPositionX: "200%" }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -60,22 +61,43 @@ export default function AboutSection() {
             About <span className="text-white">InfraVibe Tech</span>
           </motion.h2>
 
+          {/* === Sub Heading === */}
+         <motion.h3
+  className="text-lg sm:text-xl font-semibold leading-tight"
+  initial={{ backgroundPositionX: "0%" }}
+  animate={{ backgroundPositionX: "200%" }}
+  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+  style={{
+    backgroundImage:
+      "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+    backgroundSize: "200%",
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  }}
+>
+  Empowering Businesses Digitally
+</motion.h3>
+
+
+          {/* === Description Paragraphs === */}
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-lg">
             <span className="text-teal-400 font-semibold">InfraVibe Tech</span>{" "}
-            is a future-ready digital innovation agency committed to empowering
-            brands through <span className="text-blue-400 font-medium">technology</span>,
-            <span className="text-pink-400 font-medium"> creativity</span>, and{" "}
-            <span className="text-green-400 font-medium">strategy</span>.  
-            We build scalable, modern, and visually striking digital experiences
-            that drive impact and elevate online presence.
+            is a next-generation digital innovation agency dedicated to helping
+            brands grow through{" "}
+            <span className="text-blue-400 font-medium">technology</span>,{" "}
+            <span className="text-pink-400 font-medium">creativity</span>, and{" "}
+            <span className="text-green-400 font-medium">strategic thinking</span>.
+            We design high-performance, modern, and visually captivating digital
+            experiences that elevate your online presence and business impact.
           </p>
 
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-lg">
-            Our passionate experts fuse design and technology to deliver
-            high-performance websites, marketing solutions, and IT services that
-            keep your business ahead in a fast-changing digital world.
+            Our passionate team blends design and technology to craft websites,
+            marketing solutions, and IT systems that ensure you stay ahead in
+            today’s ever-evolving digital landscape.
           </p>
 
+          {/* === CTA Button === */}
           <motion.a
             href="/about"
             whileHover={{ scale: 1.07 }}
@@ -83,8 +105,8 @@ export default function AboutSection() {
             className="inline-block mt-4 px-8 py-3 rounded-xl font-semibold text-white 
                        bg-gradient-to-r from-blue-500 to-teal-400 
                        shadow-[0_0_25px_rgba(45,212,191,0.4)] 
-                       hover:shadow-[0_0_45px_rgba(45,212,191,0.6)] 
-                       transition-all duration-300"
+                       hover:shadow-[0_0_50px_rgba(45,212,191,0.6)] 
+                       transition-all duration-300 tracking-wide"
           >
             Learn More
           </motion.a>

@@ -2,38 +2,89 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Share2, Megaphone, Wrench, Laptop } from "lucide-react";
+import {
+  Globe,
+  Search,
+  Share2,
+  PenTool,
+  Rocket,
+  Wrench,
+  Network,
+  Laptop,
+  Computer,
+} from "lucide-react";
+import Head from "next/head";
 import emailjs from "emailjs-com";
 
 const services = [
   {
+    icon: <Globe className="w-10 h-10 text-blue-400" />,
     title: "Web Design & Development",
-    icon: <Code2 className="w-10 h-10 text-blue-400" />,
-    desc: "We build responsive, fast-loading, and SEO-optimized websites that deliver seamless user experiences and boost your digital presence.",
+    short: "Modern, responsive, and SEO-optimized websites.",
+    desc: "We build custom websites using React and Next.js that not only look stunning but also perform flawlessly. From UI/UX to deployment — we handle it all.",
+    keywords:
+      "web design, web development, responsive website, next js site, InfraVibe Tech",
   },
   {
-    title: "Social Media Management",
+    icon: <Search className="w-10 h-10 text-emerald-400" />,
+    title: "SEO & Digital Marketing",
+    short: "Boost visibility and grow your business organically.",
+    desc: "Our SEO experts and marketers use proven techniques to get your brand discovered — from keyword research to backlinks and paid promotions.",
+    keywords: "seo, digital marketing, google ranking, traffic growth, ads",
+  },
+  {
     icon: <Share2 className="w-10 h-10 text-pink-400" />,
-    desc: "We handle your online presence across platforms, ensuring consistent engagement, creative content, and measurable growth.",
+    title: "Social Media Management",
+    short: "Build your online presence and engage customers.",
+    desc: "We handle everything — from daily posts to running campaigns on Instagram, Facebook, and LinkedIn. Consistency + Creativity = Growth.",
+    keywords: "social media marketing, instagram ads, facebook page management",
   },
   {
-    title: "Digital Marketing",
-    icon: <Megaphone className="w-10 h-10 text-green-400" />,
-    desc: "Data-driven marketing strategies to reach your audience effectively, enhance conversions, and grow your brand visibility.",
+    icon: <PenTool className="w-10 h-10 text-yellow-400" />,
+    title: "Branding & Identity",
+    short: "Crafting your brand’s visual story with impact.",
+    desc: "From logo design to brand guidelines, we create visuals that define your identity and connect emotionally with your audience.",
+    keywords: "branding, logo design, brand identity, creative agency",
   },
   {
-    title: "Tech Support & Maintenance",
-    icon: <Wrench className="w-10 h-10 text-cyan-400" />,
-    desc: "Comprehensive IT support and maintenance services that keep your business running smoothly and efficiently.",
+    icon: <Network className="w-10 h-10 text-cyan-400" />,
+    title: "Networking & CCTV Setup",
+    short: "Stay connected and secure with reliable solutions.",
+    desc: "Professional setup for WiFi networks and CCTV surveillance systems for homes and businesses — safe, fast, and future-ready.",
+    keywords: "CCTV setup, network installation, WiFi setup, IT services",
   },
   {
-    title: "Laptop & PC on Rent",
-    icon: <Laptop className="w-10 h-10 text-yellow-400" />,
-    desc: "Flexible, affordable laptop and PC rental options for businesses, students, and events — quality devices on demand.",
+    icon: <Laptop className="w-10 h-10 text-orange-400" />,
+    title: "Laptop & PC Repair",
+    short: "Quick and reliable computer repair service.",
+    desc: "Hardware, software, and performance issues fixed by certified experts. We ensure your system runs like new again.",
+    keywords: "laptop repair, pc service, computer fix Bhankharpur",
+  },
+  {
+    icon: <Rocket className="w-10 h-10 text-teal-400" />,
+    title: "Website Maintenance",
+    short: "Keep your site secure, fast, and up-to-date.",
+    desc: "From updates to backups, we maintain your website’s health and ensure smooth operation — so you can focus on your business.",
+    keywords: "website maintenance, hosting, update management",
+  },
+  {
+    icon: <Computer className="w-10 h-10 text-indigo-400" />,
+    title: "Laptop on Rent",
+    short: "Flexible rental plans for students and businesses.",
+    desc: "Affordable and ready-to-use laptops on rent — ideal for events, offices, or temporary work setups. Hassle-free pickup & delivery.",
+    keywords: "laptop rent, computer rental, InfraVibe Tech rental service",
+  },
+  {
+    icon: <Wrench className="w-10 h-10 text-red-400" />,
+    title: "Technical Support & IT Assistance",
+    short: "Complete on-call and remote tech help for your systems.",
+    desc: "Facing technical issues? Our experts provide instant remote and on-site IT support for hardware, software, and network problems — ensuring your business never stops.",
+    keywords:
+      "technical support, IT assistance, remote help, onsite IT support, InfraVibe Tech helpdesk",
   },
 ];
 
-export default function ServicesSection() {
+export default function OurServices() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -54,7 +105,12 @@ export default function ServicesSection() {
     };
 
     emailjs
-      .send("service_wopn9yo", "template_y9fuu0k", templateParams, "2t80qrQxsCLSTo4uC")
+      .send(
+        "service_wopn9yo",
+        "template_y9fuu0k",
+        templateParams,
+        "2t80qrQxsCLSTo4uC"
+      )
       .then(() => {
         setSent(true);
         setTimeout(() => setSelectedService(null), 2000);
@@ -65,12 +121,28 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="bg-premium relative w-full text-white py-16 md:py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
+      className="relative w-full py-20 px-6 md:px-12 lg:px-24 bg-premium text-white overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto text-center relative z-10">
-        {/* ==== Premium Animated Heading ==== */}
+      {/* === SEO Meta Tags === */}
+      <Head>
+        <title>InfraVibe Tech - Our Services & What We Offer</title>
+        <meta
+          name="description"
+          content="Explore InfraVibe Tech’s full suite of services — from web design and digital marketing to IT repair, networking, and SEO solutions across Punjab, India."
+        />
+        <meta
+          name="keywords"
+          content={services.map((s) => s.keywords).join(", ")}
+        />
+      </Head>
+
+      {/* === Background Glow === */}
+      <div className="absolute top-0 left-0 w-[20rem] h-[20rem] bg-gradient-to-r from-blue-500/20 to-teal-400/20 blur-[160px] rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-[24rem] h-[24rem] bg-gradient-to-l from-teal-400/20 to-blue-500/20 blur-[160px] rounded-full"></div>
+
+      <div className="relative max-w-7xl mx-auto text-center z-10">
+        {/* === Section Heading === */}
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold leading-tight"
           initial={{ backgroundPositionX: "0%" }}
           animate={{ backgroundPositionX: "200%" }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -81,56 +153,62 @@ export default function ServicesSection() {
             WebkitBackgroundClip: "text",
             color: "transparent",
           }}
+          className="text-4xl md:text-5xl font-extrabold leading-tight mb-4"
         >
-          Our <span className="text-white">Services</span>
+          Our Services & What We Offer
         </motion.h2>
 
-        {/* Gradient Line Underline */}
-        <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
+        <div className="w-24 h-1 mx-auto mt-3 mb-10 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
 
-        <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-12">
-          Explore a complete range of digital services designed to empower your
-          business — from web design to marketing, support, and beyond.
+        <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-14">
+          We bring together web technology, marketing, and IT expertise to take
+          your business from offline to fully online — with complete support at
+          every step.
         </p>
 
-        {/* ==== Services Grid Layout ==== */}
-        <div className="flex flex-col items-center gap-8">
-          <div className="flex flex-wrap justify-center gap-8 w-full">
-            {services.slice(0, 2).map((service) => (
-              <ServiceCard
-                key={service.title}
-                service={service}
-                onClick={() => setSelectedService(service.title)}
-              />
-            ))}
-            <div className="hidden lg:block">
-              <ServiceCard
-                service={services[2]}
-                onClick={() => setSelectedService(services[2].title)}
-              />
-            </div>
-          </div>
+        {/* === Services Grid === */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {services.map((service, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -8, scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 250 }}
+              onClick={() => setSelectedService(service.title)}
+              className="group bg-white/10 border border-white/10 rounded-2xl p-6 cursor-pointer 
+                         backdrop-blur-xl hover:bg-white/20 hover:border-teal-400/30 transition-all 
+                         duration-300 shadow-lg hover:shadow-teal-500/30"
+            >
+              <div className="mb-5 flex justify-center">{service.icon}</div>
 
-          <div className="w-full flex justify-center lg:hidden">
-            <ServiceCard
-              service={services[2]}
-              onClick={() => setSelectedService(services[2].title)}
-            />
-          </div>
+              {/* Gradient Animated Heading (Same as other sections) */}
+              <motion.h3
+                initial={{ backgroundPositionX: "0%" }}
+                animate={{ backgroundPositionX: "200%" }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+                  backgroundSize: "200%",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                }}
+                className="text-xl font-bold mb-2 text-center tracking-wide"
+              >
+                {service.title}
+              </motion.h3>
 
-          <div className="flex flex-wrap justify-center gap-8 w-full">
-            {services.slice(3, 5).map((service) => (
-              <ServiceCard
-                key={service.title}
-                service={service}
-                onClick={() => setSelectedService(service.title)}
-              />
-            ))}
-          </div>
+              <p className="text-gray-300 text-sm text-center font-medium mb-2">
+                {service.short}
+              </p>
+              <p className="text-gray-400 text-sm text-center leading-relaxed">
+                {service.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* ==== Inquiry Modal ==== */}
+      {/* === Inquiry Modal === */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
@@ -220,47 +298,3 @@ export default function ServicesSection() {
     </section>
   );
 }
-
-/* ==== Card Component with Animated Gradient Title ==== */
-const ServiceCard = ({ service, onClick }: any) => (
-  <motion.div
-    whileHover={{ y: -8, scale: 1.03 }}
-    transition={{ type: "spring", stiffness: 300 }}
-    onClick={onClick}
-    className="group bg-white/10 border border-white/10 rounded-2xl p-6 
-               w-full sm:w-[90%] md:w-[45%] lg:w-[320px] 
-               min-h-[260px] flex flex-col justify-between
-               cursor-pointer backdrop-blur-xl 
-               hover:bg-white/20 hover:border-teal-400/30 transition-all duration-300
-               shadow-lg hover:shadow-teal-500/20 text-center"
-  >
-    <div className="flex justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
-      {service.icon}
-    </div>
-
-    <div>
-      {/* Animated gradient text same as “Our” */}
-      <motion.h3
-        className="text-lg font-semibold mb-2 leading-snug"
-        initial={{ backgroundPositionX: "0%" }}
-        animate={{ backgroundPositionX: "200%" }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-        style={{
-          backgroundImage:
-            "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-          backgroundSize: "200%",
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-        }}
-      >
-        {service.title}
-      </motion.h3>
-
-      <p className="text-gray-300 text-sm leading-relaxed">{service.desc}</p>
-    </div>
-
-    <motion.div
-      className="h-[2px] w-0 group-hover:w-full mx-auto mt-4 bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400 transition-all duration-500"
-    />
-  </motion.div>
-);
