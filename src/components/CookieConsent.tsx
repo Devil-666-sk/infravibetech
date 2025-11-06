@@ -1,4 +1,3 @@
-// components/CookieConsent.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,13 +9,9 @@ function setConsentCookie(value: ConsentValue) {
   try {
     localStorage.setItem(COOKIE_NAME, value);
   } catch {}
-  // Google (gtag) consent update (replace GA_MEASUREMENT_ID if needed elsewhere)
   if (typeof window !== "undefined" && (window as any).gtag) {
-    // analytics_storage controls Google Analytics cookies
     const analytics_storage = value === "accepted" ? "granted" : "denied";
-    (window as any).gtag("consent", "update", {
-      analytics_storage,
-    });
+    (window as any).gtag("consent", "update", { analytics_storage });
   }
 }
 
@@ -36,7 +31,6 @@ export default function CookieConsent() {
     const stored = getStoredConsent();
     setConsent(stored);
     if (stored === "unknown") {
-      // show banner after small delay so it doesn't flash on SSR
       setTimeout(() => setVisible(true), 500);
     }
   }, []);
@@ -46,13 +40,14 @@ export default function CookieConsent() {
     setConsentCookie("accepted");
     setVisible(false);
   }
+
   function rejectAll() {
     setConsent("rejected");
     setConsentCookie("rejected");
     setVisible(false);
   }
+
   function openSettings() {
-    // optional: open a modal or redirect to /privacy
     window.location.href = "/privacy";
   }
 
@@ -61,22 +56,26 @@ export default function CookieConsent() {
   return (
     <div
       aria-live="polite"
-      className="fixed left-4 right-4 md:left-8 md:right-auto md:bottom-8 bottom-6 z-50 flex items-center gap-4 p-4 max-w-3xl shadow-2xl rounded-2xl bg-gradient-to-r from-white/80 to-white/60 backdrop-blur-md border border-white/20"
-      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}
+      className="fixed left-4 right-4 md:left-8 md:right-auto md:bottom-8 bottom-6 z-50 flex flex-col md:flex-row md:items-center gap-4 p-4 md:p-5 max-w-3xl shadow-2xl rounded-2xl bg-gradient-to-r from-white/90 to-white/60 backdrop-blur-md border border-white/20 transition-all duration-300 ease-in-out"
+      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.1)" }}
     >
       <div className="flex-1 min-w-0">
-        <h3 className="text-base md:text-lg font-semibold" style={{ fontFamily: "Poppins, Montserrat, sans-serif" }}>
+        <h3
+          className="text-base md:text-lg font-semibold text-slate-800"
+          style={{ fontFamily: "Poppins, Montserrat, sans-serif" }}
+        >
           InfraVibe uses cookies
         </h3>
-        <p className="text-sm md:text-base text-slate-600 mt-1">
-          We use cookies to improve site experience, analyse traffic and personalise content. You can accept all or manage settings.
+        <p className="text-sm md:text-base text-slate-600 mt-1 leading-snug">
+          We use cookies to improve your experience, analyse traffic, and
+          personalise content. You can accept all or manage your preferences.
         </p>
       </div>
 
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 w-full md:w-auto">
         <button
           onClick={openSettings}
-          className="px-3 py-2 rounded-lg text-sm border border-transparent hover:underline"
+          className="w-full sm:w-auto px-4 py-2 rounded-lg text-sm border border-transparent text-slate-700 hover:underline transition"
           aria-label="Manage cookie settings"
         >
           Settings
@@ -84,7 +83,7 @@ export default function CookieConsent() {
 
         <button
           onClick={rejectAll}
-          className="px-3 py-2 rounded-lg text-sm bg-white/70 hover:bg-white/80 border border-white/10"
+          className="w-full sm:w-auto px-4 py-2 rounded-lg text-sm bg-white/70 hover:bg-white/80 border border-white/10 text-slate-800 transition"
           aria-label="Reject cookies"
         >
           Reject
@@ -92,7 +91,7 @@ export default function CookieConsent() {
 
         <button
           onClick={acceptAll}
-          className="px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-500 to-cyan-400 text-white shadow-lg hover:scale-[1.02] transform transition"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-500 to-cyan-400 text-white shadow-lg hover:scale-[1.03] transform transition duration-200"
           aria-label="Accept cookies"
         >
           Accept

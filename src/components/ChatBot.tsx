@@ -5,24 +5,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo.png"; // apna logo sahi path pe rakho
+import logo from "@/assets/logo.webp"; // apna logo sahi path pe rakho
 
 interface Message {
   from: "bot" | "user";
   text: string;
-  options?: string[]; // clickable options
+  options?: string[];
 }
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { from: "bot", text: "👋 Hi! Welcome to InfraVibe Tech." },
-    { from: "bot", text: "How can I help you today?" },
+    { from: "bot", text: "👋 Hi! Welcome to InfraVibeTech." },
+    { from: "bot", text: "How can I assist you today?" },
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll to latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -31,32 +30,35 @@ export default function ChatBot() {
     let reply: Message = { from: "bot", text: "" };
 
     switch (option) {
-      case "About InfraVibe Tech":
+      case "About InfraVibeTech":
         reply.text =
-          "We are a technology-driven company providing innovative digital and automation solutions.";
+          "InfraVibeTech is a complete IT and digital solutions company offering end-to-end services — from hardware support to online growth.";
         break;
 
       case "Our Services":
         reply = {
           from: "bot",
-          text: "Here are our main services. Tap any to contact us 👇",
+          text: "Here are our main services 👇 Tap to connect:",
           options: [
             "🌐 Web Design & Development",
-            "📱 Social Media Maintenance",
-            "📢 Digital Marketing Solutions",
-            "🛠️ Tech Support & Maintenance",
-            "💻 Laptop & PC on Rent",
+            "📈 SEO (On-page & Off-page)",
+            "📱 Social Media Management & Ads",
+            "🎯 Lead Generation & Branding Campaigns",
+            "🛠️ Laptop & PC Repairing",
+            "💻 New & Refurbished Laptop Sales",
+            "🖥️ Laptop on Rent",
           ],
         };
         break;
 
       case "Get a Quote":
         reply.text =
-          "Sure! Let’s connect directly on WhatsApp for a personalized quote 👇";
+          "Sure! Let's connect directly on WhatsApp for a personalized quote 👇";
         break;
 
       case "Contact Team":
-        reply.text = "You can reach us directly via WhatsApp below 👇";
+        reply.text =
+          "You can reach our team directly on WhatsApp below 👇";
         break;
 
       default:
@@ -67,13 +69,12 @@ export default function ChatBot() {
   };
 
   const handleServiceClick = (service: string) => {
-    // Send email link or WhatsApp link when user clicks a service
-    const whatsappLink = `https://wa.me/917860225993?text=Hi%20InfraVibe%20Tech!%20I'm%20interested%20in%20${encodeURIComponent(
+    const whatsappLink = `https://wa.me/917860225993?text=Hi%20InfraVibeTech!%20I'm%20interested%20in%20${encodeURIComponent(
       service
     )}`;
     const mailLink = `mailto:infravibetech@gmail.com?subject=Service%20Inquiry%20-%20${encodeURIComponent(
       service
-    )}&body=Hi%20InfraVibe%20Tech,%0D%0A%0D%0AI%27m%20interested%20in%20your%20${encodeURIComponent(
+    )}&body=Hi%20InfraVibeTech,%0D%0A%0D%0AI%27m%20interested%20in%20your%20${encodeURIComponent(
       service
     )}%20service.%0D%0APlease%20contact%20me%20with%20more%20details.%0D%0A%0D%0AThanks!`;
 
@@ -86,7 +87,6 @@ export default function ChatBot() {
       },
     ]);
 
-    // Delay link display for better UX
     setTimeout(() => {
       window.open(whatsappLink, "_blank");
     }, 700);
@@ -114,11 +114,11 @@ export default function ChatBot() {
             transition={{ duration: 0.3 }}
             className="fixed bottom-20 right-4 sm:right-6 z-40 w-[90%] sm:w-80 md:w-96 bg-white/30 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
-            {/* Watermark Background */}
+            {/* Background Logo */}
             <div className="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
               <Image
                 src={logo}
-                alt="InfraVibe Logo"
+                alt="InfraVibeTech Logo"
                 className="object-contain w-40 h-40 sm:w-56 sm:h-56"
               />
             </div>
@@ -135,16 +135,11 @@ export default function ChatBot() {
               </button>
             </div>
 
-            {/* Messages Container */}
+            {/* Messages */}
             <div
               className="relative z-10 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400/40 scrollbar-track-transparent px-3 pt-4 pb-2 space-y-3"
-              style={{
-                maxHeight: "22rem",
-                scrollBehavior: "smooth",
-              }}
+              style={{ maxHeight: "22rem", scrollBehavior: "smooth" }}
             >
-              <div className="h-2" /> {/* top padding */}
-
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -161,7 +156,6 @@ export default function ChatBot() {
                   >
                     {msg.text}
 
-                    {/* If message has service options */}
                     {msg.options && (
                       <div className="mt-2 flex flex-col gap-2">
                         {msg.options.map((opt, i) => (
@@ -176,12 +170,11 @@ export default function ChatBot() {
                       </div>
                     )}
 
-                    {/* WhatsApp link in Get a Quote / Contact Team */}
                     {(msg.text.includes("WhatsApp") ||
                       msg.text.includes("below")) && (
                       <div className="mt-2">
                         <Link
-                          href="https://wa.me/917860225993?text=Hi%20InfraVibe%20Tech%2C%20I%20need%20some%20help!"
+                          href="https://wa.me/917860225993?text=Hi%20InfraVibeTech%2C%20I%20need%20some%20help!"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 bg-green-500 text-white px-3 py-1 rounded-lg text-xs font-semibold hover:bg-green-600 transition"
@@ -194,14 +187,13 @@ export default function ChatBot() {
                   </div>
                 </div>
               ))}
-
               <div ref={messagesEndRef} />
             </div>
 
             {/* Quick Options */}
             <div className="relative z-10 border-t border-white/20 p-2 grid grid-cols-2 gap-2 bg-white/50 backdrop-blur-md">
               {[
-                "About InfraVibe Tech",
+                "About InfraVibeTech",
                 "Our Services",
                 "Get a Quote",
                 "Contact Team",

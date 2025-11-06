@@ -3,13 +3,15 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const testimonials = [
   {
     name: "Aman Thakur",
     role: "Local Shop Owner",
     review:
-      "InfraVibe Tech redesigned my website and optimized it for local SEO. Now my shop appears on Google Maps and I’m getting regular online inquiries!",
+      "Infra VibeTech redesigned my website and optimized it for local SEO. Now my shop appears on Google Maps and I’m getting regular online inquiries!",
   },
   {
     name: "Shreya Patel",
@@ -33,7 +35,7 @@ const testimonials = [
     name: "Vivek Sharma",
     role: "Restaurant Owner",
     review:
-      "Thanks to InfraVibe Tech’s local SEO and Google Business setup, my restaurant started showing up in top searches nearby — amazing results!",
+      "Thanks to Infra VibeTech’s local SEO and Google Business setup, my restaurant started showing up in top searches nearby — amazing results!",
   },
   {
     name: "Sneha Kapoor",
@@ -51,7 +53,7 @@ const testimonials = [
     name: "Divya Malhotra",
     role: "Marketing Manager",
     review:
-      "We hired InfraVibe Tech for SEO and PPC management — and their results were excellent! Our brand started ranking for key industry terms.",
+      "We hired Infra VibeTech for SEO and PPC management — and their results were excellent! Our brand started ranking for key industry terms.",
   },
 ];
 
@@ -68,12 +70,16 @@ export default function TestimonialsCarousel() {
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280, // large screen
         settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 640,
-        settings: { slidesToShow: 1 },
+        breakpoint: 768, // tablet
+        settings: { slidesToShow: 1, centerMode: false },
+      },
+      {
+        breakpoint: 480, // mobile
+        settings: { slidesToShow: 1, dots: true, centerMode: false },
       },
     ],
   };
@@ -81,7 +87,7 @@ export default function TestimonialsCarousel() {
   return (
     <section
       id="testimonials"
-      className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-premium text-white overflow-hidden"
+      className="relative w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 bg-premium text-white overflow-hidden"
     >
       {/* === Gradient Glow Background === */}
       <div className="absolute top-0 left-0 w-[20rem] h-[20rem] bg-gradient-to-r from-blue-500/20 to-teal-400/20 blur-[160px] rounded-full"></div>
@@ -108,18 +114,18 @@ export default function TestimonialsCarousel() {
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}
-            className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight mb-4"
           >
             What Our Clients Say
           </motion.h2>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
             Trusted by{" "}
-            <span className="text-teal-400 font-semibold">business owners</span>,
-            <span className="text-blue-400 font-semibold"> creators</span>, and
-            <span className="text-pink-400 font-semibold"> startups</span> across India —{" "}
-            InfraVibe Tech delivers real results through smart web design, SEO,
-            and digital marketing.
+            <span className="text-teal-400 font-semibold">business owners</span>,{" "}
+            <span className="text-blue-400 font-semibold">creators</span>, and{" "}
+            <span className="text-pink-400 font-semibold">startups</span> across
+            India — <strong>Infra VibeTech</strong> delivers real results through
+            modern web design, SEO, and digital marketing.
           </p>
         </motion.div>
 
@@ -130,9 +136,9 @@ export default function TestimonialsCarousel() {
               key={i}
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="px-4"
+              className="px-3 sm:px-4"
             >
-              <div className="p-6 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-2xl shadow-[0_0_25px_-5px_rgba(45,212,191,0.4)] text-left hover:shadow-[0_0_45px_-5px_rgba(45,212,191,0.6)] transition-all duration-300">
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-2xl shadow-[0_0_25px_-5px_rgba(45,212,191,0.4)] text-left hover:shadow-[0_0_45px_-5px_rgba(45,212,191,0.6)] transition-all duration-300">
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: 5 }).map((_, star) => (
                     <Star
@@ -141,7 +147,7 @@ export default function TestimonialsCarousel() {
                     />
                   ))}
                 </div>
-                <p className="text-gray-200 text-base leading-relaxed mb-4">
+                <p className="text-gray-200 text-sm sm:text-base leading-relaxed mb-4">
                   “{t.review}”
                 </p>
 
@@ -157,12 +163,12 @@ export default function TestimonialsCarousel() {
                     WebkitBackgroundClip: "text",
                     color: "transparent",
                   }}
-                  className="font-semibold text-lg"
+                  className="font-semibold text-base sm:text-lg"
                 >
                   {t.name}
                 </motion.h4>
 
-                <p className="text-gray-400 text-sm">{t.role}</p>
+                <p className="text-gray-400 text-xs sm:text-sm">{t.role}</p>
               </div>
             </motion.div>
           ))}

@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "What services does InfraVibe Tech provide?",
+    question: "What services does Infra VibeTech provide?",
     answer:
       "We offer complete digital solutions including Web Design, Web Development, SEO, Digital Marketing, Branding, and Website Maintenance — all crafted to help your business grow online.",
   },
@@ -26,7 +26,7 @@ const faqs = [
       "Absolutely. We use modern frameworks like Next.js and responsive design techniques to ensure your website loads fast and performs perfectly on all devices.",
   },
   {
-    question: "How can I get started with InfraVibe Tech?",
+    question: "How can I get started with Infra VibeTech?",
     answer:
       "Simply contact us through our website form or WhatsApp. Our team will connect with you for a quick consultation to understand your goals and start your project.",
   },

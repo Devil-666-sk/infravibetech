@@ -1,29 +1,63 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 
 export default function Footer() {
+  const socialLinks = [
+    {
+      href: "https://www.facebook.com/share/1DQcUzi9PP/",
+      icon: <Facebook className="w-5 h-5" />,
+      bg: "bg-[#1877F2]",
+      hover: "hover:shadow-[0_0_15px_#1877F2]",
+    },
+    {
+      href: "https://www.instagram.com/infravibetech/",
+      icon: <Instagram className="w-5 h-5" />,
+      bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
+      hover: "hover:shadow-[0_0_15px_#DD2A7B]",
+    },
+    {
+      href: "https://www.linkedin.com/company/infravibe-tech/",
+      icon: <Linkedin className="w-5 h-5" />,
+      bg: "bg-[#0A66C2]",
+      hover: "hover:shadow-[0_0_15px_#0A66C2]",
+    },
+    {
+      href: "https://www.youtube.com/@infravibetech",
+      icon: <Youtube className="w-5 h-5" />,
+      bg: "bg-[#FF0000]",
+      hover: "hover:shadow-[0_0_15px_#FF0000]",
+    },
+  ];
+
   return (
-    <footer className="relative bg-premium text-white pt-10 pb-4 px-6 md:px-12 lg:px-20 border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-premium text-white pt-10 pb-6 px-6 sm:px-10 border-t border-white/10 overflow-hidden">
       {/* === Background Glow === */}
       <div className="absolute top-0 left-0 w-[14rem] h-[14rem] bg-gradient-to-r from-blue-500/15 to-teal-400/15 blur-[100px] rounded-full"></div>
       <div className="absolute bottom-0 right-0 w-[18rem] h-[18rem] bg-gradient-to-l from-teal-400/15 to-blue-500/15 blur-[100px] rounded-full"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:80px_80px] opacity-10"></div>
 
       {/* === Main Content === */}
-      <div className="relative max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 z-10">
+      <div className="relative max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 z-10 text-center sm:text-left">
         {/* === Logo & About === */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
+        <div className="space-y-3 flex flex-col items-center sm:items-start">
+          <div className="flex items-center gap-3 justify-center sm:justify-start">
             <Image
               src={logo}
-              alt="InfraVibe Tech Logo"
-              width={45}
-              height={45}
+              alt="Infra VibeTech Logo"
+              width={50}
+              height={50}
               className="rounded-lg shadow-md"
             />
             <motion.h3
@@ -37,20 +71,21 @@ export default function Footer() {
                 WebkitBackgroundClip: "text",
                 color: "transparent",
               }}
-              className="text-lg font-bold"
+              className="text-xl sm:text-2xl font-extrabold tracking-wide"
             >
-              InfraVibe Tech
+              Infra VibeTech
             </motion.h3>
           </div>
-          <p className="text-gray-300 text-sm leading-relaxed max-w-xs">
-            We design and digitally transform businesses through innovative websites,
-            SEO, and marketing solutions.
+          <p className="text-gray-300 text-sm leading-relaxed max-w-xs mx-auto sm:mx-0">
+            We design and digitally transform businesses through innovative
+            websites, SEO, and marketing solutions.
           </p>
         </div>
 
         {/* === Quick Links === */}
         <div className="space-y-3">
           <motion.h4
+            className="text-lg font-semibold"
             initial={{ backgroundPositionX: "0%" }}
             animate={{ backgroundPositionX: "200%" }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -61,21 +96,27 @@ export default function Footer() {
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}
-            className="text-lg font-semibold"
           >
             Quick Links
           </motion.h4>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li><Link href="/" className="hover:text-teal-400 transition cursor-pointer">Home</Link></li>
-            <li><Link href="/about" className="hover:text-teal-400 transition cursor-pointer">About Us</Link></li>
-            <li><Link href="/services" className="hover:text-teal-400 transition cursor-pointer">Services</Link></li>
-            <li><Link href="/contact" className="hover:text-teal-400 transition cursor-pointer">Contact</Link></li>
+            {["Home", "About Us", "Services", "Contact"].map((item, i) => (
+              <li key={i}>
+                <Link
+                  href={`/${item.toLowerCase().replace(" ", "")}`}
+                  className="hover:text-teal-400 transition"
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* === Contact Info === */}
         <div className="space-y-3">
           <motion.h4
+            className="text-lg font-semibold"
             initial={{ backgroundPositionX: "0%" }}
             animate={{ backgroundPositionX: "200%" }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -86,26 +127,30 @@ export default function Footer() {
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}
-            className="text-lg font-semibold"
           >
             Contact
           </motion.h4>
           <ul className="space-y-2 text-gray-300 text-sm">
-            <li className="flex items-center gap-2">
+            <li className="flex justify-center sm:justify-start items-center gap-2">
               <Mail className="w-4 h-4 text-teal-400" />
-              <a href="mailto:infravibetech@gmail.com" className="hover:text-teal-400 transition">
+              <a
+                href="mailto:infravibetech@gmail.com"
+                className="hover:text-teal-400"
+              >
                 infravibetech@gmail.com
               </a>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex justify-center sm:justify-start items-center gap-2">
               <Phone className="w-4 h-4 text-teal-400" />
-              <a href="tel:+917860225993" className="hover:text-teal-400 transition">
+              <a href="tel:+917860225993" className="hover:text-teal-400">
                 +91 78602 25993
               </a>
             </li>
-            <li className="flex items-start gap-2">
+            <li className="flex justify-center sm:justify-start items-start gap-2">
               <MapPin className="w-4 h-4 text-teal-400 mt-0.5" />
-              <p>Sunder Nagar Colony, Bhankharpur, Punjab – 140201</p>
+              <p className="max-w-[180px] sm:max-w-none">
+                Sunder Nagar Colony, Bhankharpur, Punjab – 140201
+              </p>
             </li>
           </ul>
         </div>
@@ -113,6 +158,7 @@ export default function Footer() {
         {/* === Follow Us === */}
         <div className="space-y-3">
           <motion.h4
+            className="text-lg font-semibold"
             initial={{ backgroundPositionX: "0%" }}
             animate={{ backgroundPositionX: "200%" }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -123,43 +169,22 @@ export default function Footer() {
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}
-            className="text-lg font-semibold"
           >
             Follow Us
           </motion.h4>
           <p className="text-gray-300 text-sm">
             Stay connected with InfraVibe for updates and digital tips.
           </p>
-          <div className="flex gap-3">
-            {[
-              {
-                href: "https://www.facebook.com/share/1DQcUzi9PP/",
-                icon: <Facebook className="w-4 h-4" />,
-                gradient: "from-blue-500 to-teal-400",
-              },
-              {
-                href: "https://www.instagram.com/infravibetech/",
-                icon: <Instagram className="w-4 h-4" />,
-                gradient: "from-pink-500 to-orange-400",
-              },
-              {
-                href: "https://www.linkedin.com/company/infravibe-tech/",
-                icon: <Linkedin className="w-4 h-4" />,
-                gradient: "from-blue-600 to-cyan-400",
-              },
-            ].map((item, i) => (
+          <div className="flex justify-center sm:justify-start gap-3">
+            {socialLinks.map((item, i) => (
               <motion.a
                 key={i}
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{
-                  scale: 1.2,
-                  rotate: 10,
-                  boxShadow: "0px 0px 15px rgba(0,255,255,0.5)",
-                }}
+                whileHover={{ scale: 1.2, rotate: 10 }}
                 whileTap={{ scale: 0.9 }}
-                className={`p-2.5 bg-white/10 rounded-full hover:bg-gradient-to-r ${item.gradient} transition-all duration-300 cursor-pointer`}
+                className={`p-2.5 rounded-full text-white transition-all duration-300 ${item.bg} ${item.hover}`}
               >
                 {item.icon}
               </motion.a>
@@ -169,12 +194,13 @@ export default function Footer() {
       </div>
 
       {/* === Bottom Bar === */}
-      <div className="relative mt-4 border-t border-white/10 pt-3 text-center">
+      <div className="relative mt-6 border-t border-white/10 pt-3 text-center">
         <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
           © {new Date().getFullYear()}{" "}
-          <span className="text-white font-semibold">InfraVibe Tech</span> — All Rights Reserved.
-          <br />
-          {/* <span className="text-teal-400">Made with ❤️ in Punjab, India</span> */}
+          <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
+            Infra VibeTech
+          </span>{" "}
+          — All Rights Reserved.
         </p>
       </div>
     </footer>

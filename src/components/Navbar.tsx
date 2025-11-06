@@ -1,3 +1,4 @@
+// components/Navbar.tsx
 "use client";
 
 import { useState } from "react";
@@ -5,196 +6,346 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileDigitalOpen, setMobileDigitalOpen] = useState(false);
+  const [mobileTechOpen, setMobileTechOpen] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
+    { name: "Services", dropdown: true },
     { name: "Projects", path: "/projects" },
     { name: "Contact", path: "/contact" },
   ];
 
+  // ✅ Updated Services (Official List)
+  const digitalServices = [
+    { name: "Web Design & Development", path: "/services/web-development" },
+    { name: "SEO Optimization", path: "/services/seo" },
+    { name: "Social Media Management & Ads", path: "/services/social-media" },
+    { name: "Lead Generation & Branding", path: "/services/branding" },
+  ];
+
+  const technicalServices = [
+    { name: "Laptop & PC Repair", path: "/technical/laptop-repair" },
+    { name: "New & Refurbished Laptop Sales", path: "/technical/sales" },
+    { name: "Laptop on Rent", path: "/technical/laptop-rent" },
+  ];
+
   return (
     <motion.nav
-      initial={{ y: 0 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="fixed top-0 left-0 w-full z-50 
-                 bg-transparent backdrop-blur-xl border-b border-white/10 
-                 shadow-[0_0_25px_rgba(0,200,130,0.2)]"
+      initial={{ y: -30, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_25px_rgba(0,200,150,0.15)]"
+      aria-label="Infra VibeTech Main Navigation"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2.5 sm:px-6 md:px-8">
-
-        {/* ---------- LEFT: Logo + Brand ---------- */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        {/* === LOGO === */}
         <Link
           href="/"
-          className="relative flex items-center space-x-2 group cursor-pointer"
+          className="flex items-center gap-2 group"
+          aria-label="Infra VibeTech Home"
         >
-          {/* Animated Glow Around Logo */}
           <motion.div
-            className="absolute -inset-1 rounded-full bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 blur-lg opacity-40 group-hover:opacity-70 transition-all duration-500"
             animate={{
-              scale: [1, 1.08, 1],
-              opacity: [0.3, 0.55, 0.3],
+              boxShadow: [
+                "0 0 15px rgba(0,200,130,0.3)",
+                "0 0 25px rgba(0,200,130,0.5)",
+                "0 0 15px rgba(0,200,130,0.3)",
+              ],
             }}
-            transition={{
-              repeat: Infinity,
-              duration: 4,
-              ease: "easeInOut",
-            }}
-          />
-
-          {/* Logo */}
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-[0_0_20px_rgba(0,200,130,0.35)] flex items-center justify-center overflow-hidden">
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center overflow-hidden"
+          >
             <Image
               src={logo}
-              alt="InfraVibe Tech Logo"
-              width={40}
-              height={40}
-              className="rounded-full z-10 transition-transform duration-500 group-hover:scale-110"
+              alt="Infra VibeTech Logo | Empowering Businesses Digitally & Technically"
+              width={50}
+              height={50}
+              title="Infra VibeTech"
+              priority
             />
-          </div>
-
-          {/* Brand Text */}
-          <div className="flex flex-col leading-tight ml-1">
-            <div className="flex items-baseline space-x-1">
-              <h1 className="text-sm sm:text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 tracking-wide group-hover:brightness-125">
-                InfraVibe
-              </h1>
-              <span className="text-[10px] sm:text-xs font-semibold text-gray-200">Tech</span>
-            </div>
-            <p className="text-[7px] sm:text-[8px] text-gray-400 font-medium tracking-wider mt-[1px]">
-              Empowering Businesses Digitally
+          </motion.div>
+          <div>
+            <motion.h1
+              className="text-[18px] font-extrabold bg-gradient-to-r from-[#00ffae] via-[#00e0ff] to-[#0095ff] bg-clip-text text-transparent animate-gradient"
+            >
+              Infra <span className="text-[#00e0ff]">VibeTech</span>
+            </motion.h1>
+            <p className="text-[10px] text-white/70">
+              Empowering Businesses Digitally & Technically
             </p>
           </div>
         </Link>
 
-        {/* ---------- RIGHT: Desktop Menu ---------- */}
-        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm xl:text-base font-medium">
+        {/* === DESKTOP MENU === */}
+        <div className="hidden lg:flex items-center space-x-6">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
+
+            if (link.dropdown) {
+              return (
+                <div
+                  key={link.name}
+                  className="relative group"
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
+                  <button className="text-gray-200 hover:text-white flex items-center gap-1">
+                    {link.name}
+                    <motion.span
+                      animate={{ rotate: servicesOpen ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="text-xs"
+                    >
+                      ▼
+                    </motion.span>
+                  </button>
+
+                  <AnimatePresence>
+                    {servicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute left-1/2 -translate-x-1/2 mt-3 w-[520px] bg-white/95 text-gray-900 backdrop-blur-md border border-gray-200 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] grid grid-cols-2 gap-4 p-5"
+                      >
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">
+                            🌐 Digital Services
+                          </h4>
+                          {digitalServices.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.path}
+                              className="block text-sm text-gray-700 hover:text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-[#00ffae] hover:to-[#0095ff] transition-all duration-300 py-1"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">
+                            💻 Technical Services
+                          </h4>
+                          {technicalServices.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.path}
+                              className="block text-sm text-gray-700 hover:text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-[#00ffae] hover:to-[#0095ff] transition-all duration-300 py-1"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.name}
-                href={link.path}
-                className={`relative px-3 py-1.5 rounded-md transition-all duration-300 group ${
+                href={link.path || "#"}
+                className={`transition-all duration-300 ${
                   isActive
-                    ? "text-white bg-gradient-to-r from-green-400/20 to-blue-400/20 shadow-[0_0_15px_rgba(0,200,150,0.3)]"
+                    ? "text-white font-semibold border-b-2 border-green-400"
                     : "text-gray-300 hover:text-white"
                 }`}
               >
-                <span className="relative z-10">{link.name}</span>
-                <motion.span
-                  className="absolute inset-0 rounded-md bg-gradient-to-r from-green-300/10 to-blue-300/10 opacity-0 group-hover:opacity-100 blur-sm transition-all duration-300"
-                />
-                <motion.span
-                  layoutId={isActive ? "underline" : undefined}
-                  className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-500 ${
-                    isActive
-                      ? "w-full opacity-100"
-                      : "w-0 group-hover:w-full opacity-80"
-                  }`}
-                />
+                {link.name}
               </Link>
             );
           })}
 
           <Link
             href="/contact"
-            className="relative overflow-hidden group inline-flex items-center justify-center px-4 py-2 rounded-lg font-semibold text-white
-            bg-gradient-to-r from-green-400 via-blue-400 to-teal-400
-            shadow-[0_0_20px_rgba(0,200,150,0.4)]
-            hover:shadow-[0_0_35px_rgba(0,200,150,0.6)]
-            transition-all duration-300 ml-2 text-sm tracking-wide"
+            className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#00ffae] to-[#0095ff] text-white font-semibold shadow-md hover:scale-105 transition-all duration-300"
           >
-            <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-              Get Quote
-            </span>
+            Get Quote
           </Link>
         </div>
 
-        {/* ---------- Mobile Toggle ---------- */}
-        <div className="lg:hidden flex items-center">
-          <button
-            aria-label="Menu Toggle"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="relative w-10 h-10 flex items-center justify-center 
-                       rounded-xl backdrop-blur-md border border-white/10 
-                       bg-white/5 shadow-[0_0_15px_rgba(0,200,150,0.25)]
-                       hover:shadow-[0_0_30px_rgba(0,200,150,0.4)] 
-                       transition-all duration-300 group"
-          >
-            <motion.div
-              animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: -6 }}
-              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
-            />
-            <motion.div
-              animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
-            />
-            <motion.div
-              animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 6 }}
-              className="absolute w-5 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full transition-all duration-300"
-            />
-          </button>
-        </div>
+        {/* === HAMBURGER === */}
+        <button
+          aria-label="Menu Toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="lg:hidden relative w-11 h-11 flex items-center justify-center rounded-lg bg-white/10 border border-white/20 shadow-[0_0_15px_rgba(0,200,130,0.3)]"
+        >
+          <motion.div
+            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: -6 }}
+            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+          />
+          <motion.div
+            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+          />
+          <motion.div
+            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 6 }}
+            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
+          />
+        </button>
       </div>
 
-      {/* ---------- Mobile Menu ---------- */}
+      {/* === MOBILE MENU === */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.35 }}
-            className="lg:hidden absolute top-[70px] left-0 w-full 
-                       bg-white/95 text-gray-900 backdrop-blur-xl
-                       border-t border-gray-200 shadow-[0_0_25px_rgba(0,0,0,0.08)]
-                       rounded-b-2xl overflow-hidden"
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-white/95 text-gray-900 border-t border-gray-200 backdrop-blur-xl shadow-md"
           >
-            <ul className="flex flex-col items-center gap-3 py-5 text-base font-medium">
-              {navLinks.map((item, index) => {
-                const isActive = pathname === item.path;
+            <ul className="flex flex-col items-center py-6 gap-3 text-base font-medium">
+              {navLinks.map((item) => {
+                if (item.dropdown) {
+                  return (
+                    <div key={item.name} className="w-full text-center">
+                      <button
+                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                        className="flex justify-center items-center w-full py-2 font-semibold text-gray-800"
+                      >
+                        {item.name}
+                        <motion.span
+                          animate={{ rotate: mobileServicesOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="ml-1 text-sm"
+                        >
+                          ▼
+                        </motion.span>
+                      </button>
+
+                      <AnimatePresence>
+                        {mobileServicesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            {/* Digital Services */}
+                            <button
+                              onClick={() =>
+                                setMobileDigitalOpen(!mobileDigitalOpen)
+                              }
+                              className="flex justify-center w-full py-2 text-gray-700 font-medium"
+                            >
+                              🌐 Digital Services
+                              <motion.span
+                                animate={{
+                                  rotate: mobileDigitalOpen ? 180 : 0,
+                                }}
+                                transition={{ duration: 0.2 }}
+                                className="ml-1 text-sm"
+                              >
+                                ▼
+                              </motion.span>
+                            </button>
+                            <AnimatePresence>
+                              {mobileDigitalOpen && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                  className="px-6"
+                                >
+                                  {digitalServices.map((sub) => (
+                                    <Link
+                                      key={sub.name}
+                                      href={sub.path}
+                                      onClick={() => setMenuOpen(false)}
+                                      className="block text-sm text-gray-700 hover:text-green-600 py-1"
+                                    >
+                                      {sub.name}
+                                    </Link>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+
+                            {/* Technical Services */}
+                            <button
+                              onClick={() => setMobileTechOpen(!mobileTechOpen)}
+                              className="flex justify-center w-full py-2 text-gray-700 font-medium"
+                            >
+                              💻 Technical Services
+                              <motion.span
+                                animate={{
+                                  rotate: mobileTechOpen ? 180 : 0,
+                                }}
+                                transition={{ duration: 0.2 }}
+                                className="ml-1 text-sm"
+                              >
+                                ▼
+                              </motion.span>
+                            </button>
+                            <AnimatePresence>
+                              {mobileTechOpen && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                  className="px-6"
+                                >
+                                  {technicalServices.map((sub) => (
+                                    <Link
+                                      key={sub.name}
+                                      href={sub.path}
+                                      onClick={() => setMenuOpen(false)}
+                                      className="block text-sm text-gray-700 hover:text-green-600 py-1"
+                                    >
+                                      {sub.name}
+                                    </Link>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
                 return (
-                  <motion.li
-                    key={item.name}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.06 * index }}
-                  >
+                  <li key={item.name}>
                     <Link
-                      href={item.path}
+                      href={item.path || "#"}
                       onClick={() => setMenuOpen(false)}
-                      className={`px-3 py-1.5 rounded-md transition-all duration-300 ${
-                        isActive
-                          ? "text-white bg-gradient-to-r from-green-400 to-blue-400"
+                      className={`px-3 py-2 rounded-md transition-all duration-300 ${
+                        pathname === item.path
+                          ? "bg-gradient-to-r from-green-400 to-blue-400 text-white"
                           : "text-gray-700 hover:text-green-500"
                       }`}
                     >
                       {item.name}
                     </Link>
-                  </motion.li>
+                  </li>
                 );
               })}
-              <motion.li
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.4 }}
+
+              <Link
+                href="/contact"
+                onClick={() => setMenuOpen(false)}
+                className="mt-4 px-5 py-2 rounded-lg bg-gradient-to-r from-[#00ffae] to-[#0095ff] text-white font-semibold shadow-md hover:scale-105 transition-transform duration-300"
               >
-                <Link
-                  href="/contact"
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-5 py-2 text-white bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 shadow-[0_0_25px_rgba(0,200,150,0.4)] text-sm font-semibold"
-                >
-                  Get Quote
-                </Link>
-              </motion.li>
+                Get Quote
+              </Link>
             </ul>
           </motion.div>
         )}

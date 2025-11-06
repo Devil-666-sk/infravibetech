@@ -37,7 +37,7 @@ export default function MissionVisionSection() {
         </motion.h2>
 
         <p className="text-gray-300 text-base sm:text-lg max-w-3xl leading-relaxed">
-          At <span className="text-teal-400 font-semibold">InfraVibe Tech</span>, we’re driven by
+          At <span className="text-teal-400 font-semibold">Infra VibeTech</span>, we’re driven by
           <span className="text-blue-400 font-medium"> innovation</span> and
           <span className="text-pink-400 font-medium"> creativity</span> — transforming businesses into strong digital brands that thrive in the modern world.
         </p>
@@ -159,7 +159,7 @@ export default function MissionVisionSection() {
             Driving Digital Empowerment
           </motion.h4>
           <p className="text-gray-300">
-            We believe innovation fuels progress. Every InfraVibe Tech project is designed to deliver
+            We believe innovation fuels progress. Every Infra VibeTech project is designed to deliver
             <span className="text-teal-400 font-medium"> scalability</span>,
             <span className="text-blue-400 font-medium"> efficiency</span>, and
             <span className="text-pink-400 font-medium"> measurable digital growth</span> for your business.

@@ -11,6 +11,7 @@ import FAQSection from "@/components/FAQSection";
 import OurProcess from "@/components/OurProcess";
 import ContactUs from "@/components/ContactUs";
 import Footer from "@/components/Footer";
+import ProjectsPage from "@/components/ProjectsPage";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
     <Navbar />
     <HomeSection />
     <ServicesSection />
+    <ProjectsPage />
     <AboutSection />
     <WhyChooseUs />
     <MissionVisionSection />

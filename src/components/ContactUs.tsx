@@ -1,46 +1,127 @@
-"use client";
+"use client"; // This MUST be the absolute first line to fix the error.
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { useState, useRef } from "react";
-import emailjs from "@emailjs/browser";
+import { Mail, Phone, MapPin, Send, CheckCircle, XCircle, Info } from "lucide-react";
+import { useState, useCallback, useRef } from "react"; 
 
+
+// NOTE for deployment: In a standard React/Next.js setup, you'd install EmailJS and import it like this:
+// import emailjs from '@emailjs/browser';
+// For this single-file environment, we'll assume the library is initialized or available globally.
+// In your actual app, ensure EmailJS is properly initialized (e.g., in a main layout or utility file).
+
+// --- Custom Notification Component (Replaces alert() ---
+const NotificationMessage = ({ notification, setNotification }) => {
+  if (!notification.message) return null;
+
+  const typeClasses = {
+    success: "bg-emerald-600 border-emerald-700 text-white",
+    error: "bg-red-600 border-red-700 text-white",
+    info: "bg-yellow-600 border-yellow-700 text-white",
+  };
+
+  const Icon = notification.type === 'success' ? CheckCircle : notification.type === 'error' ? XCircle : Info;
+
+  return (
+    <motion.div
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className={`fixed top-4 right-4 z-50 p-4 rounded-xl shadow-2xl flex items-center gap-3 border ${typeClasses[notification.type]}`}
+      role="alert"
+    >
+      <Icon className="w-6 h-6" />
+      <div className="flex-1">
+        <p className="font-semibold">{notification.type.toUpperCase()}</p>
+        <p className="text-sm">{notification.message}</p>
+      </div>
+      <button
+        onClick={() => setNotification({ message: "", type: null })}
+        className="ml-4 opacity-70 hover:opacity-100 transition-opacity"
+      >
+        &times;
+      </button>
+    </motion.div>
+  );
+};
+
+// --- Main Component ---
 export default function ContactUs() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [loading, setLoading] = useState(false);
+  const formRef = useRef(); // Use ref to access the form DOM element
 
-  // ✅ Handle form input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ message: "", type: null });
+
+  // IMPORTANT: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL EMAILJS KEYS!
+  const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+  const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+  const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
+  // Function to show notification and auto-dismiss
+  const showNotification = useCallback((message, type) => {
+    setNotification({ message, type });
+    // Auto-dismiss after 5 seconds
+    const timer = setTimeout(() => {
+      setNotification({ message: "", type: null });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ Handle EmailJS submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.name || !form.email || !form.message) {
+      showNotification("Please fill all fields before submitting!", 'info');
+      return;
+    }
+    
+    // Check for EmailJS readiness
+    if (typeof emailjs === 'undefined' || !formRef.current || SERVICE_ID.startsWith('YOUR_')) {
+        console.error("EmailJS setup incomplete. Please check keys and library initialization.");
+        showNotification("Email setup incomplete. Please update SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY.", 'error');
+        // Fallback to local simulation if EmailJS is not configured
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setLoading(false);
+        return;
+    }
+
+
     setLoading(true);
 
     try {
-      const result = await emailjs.send(
-        "service_wopn9yo", // 🔹 Your EmailJS Service ID
-        "template_twdtagu", // 🔹 Your EmailJS Template ID
-        {
-          from_name: form.name,
-          from_email: form.email,
-          message: form.message,
-        },
-        "2t80qrQxsCLSTo4uC" // 🔹 Your EmailJS Public Key
+      // ----------------------------------------------------------------------
+      // ACTUAL EMAILJS CALL
+      // The sendForm method uses the ref to get all form data by input 'name' attributes.
+      // ----------------------------------------------------------------------
+      
+      // NOTE: In a real environment, you must initialize EmailJS: 
+      // emailjs.init(PUBLIC_KEY); // if not using the key in sendForm
+      
+      const result = await emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        formRef.current, // Pass the form reference
+        PUBLIC_KEY        // Pass the Public Key
       );
 
-      console.log("EmailJS success:", result.text);
-      alert("✅ Thank you for contacting InfraVibe Tech! We'll get back soon.");
+      console.log('EmailJS Result:', result.text);
+      
+      showNotification("Message sent successfully! We’ll contact you soon.", 'success');
       setForm({ name: "", email: "", message: "" });
-    } catch (error: any) {
-      console.error("EmailJS Error:", error);
-      alert("❌ Message failed to send. Please try again later.");
+
+    } catch (error) {
+      console.error("Submission Error:", error);
+      showNotification(`Failed to send message: ${error.text || 'Network Error'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -49,183 +130,235 @@ export default function ContactUs() {
   return (
     <section
       id="contact"
-      className="bg-premium relative w-full text-white py-16 md:py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
+      // Added Inter font and adjusted background for better contrast
+      className="bg-gray-900 font-['Inter'] relative w-full text-white py-16 md:py-24 px-6 md:px-12 lg:px-20 overflow-hidden"
     >
-      {/* ==== Heading ==== */}
-      <div className="max-w-6xl mx-auto text-center relative z-10 mb-16">
-        <motion.h2
-          className="text-4xl md:text-5xl font-extrabold leading-tight"
-          initial={{ backgroundPositionX: "0%" }}
-          animate={{ backgroundPositionX: "200%" }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-            backgroundSize: "200%",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          Contact <span className="text-white">Us</span>
-        </motion.h2>
+      <NotificationMessage notification={notification} setNotification={setNotification} />
 
-        <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
-
-        <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
-          Connect with InfraVibe Tech — whether you need web design, marketing,
-          or digital transformation, we’re here to take your business forward.
-        </p>
+      {/* Background decoration for premium feel */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div className="w-96 h-96 bg-cyan-500/30 rounded-full blur-[100px] absolute top-10 left-10 animate-pulse-slow" />
+        <div className="w-80 h-80 bg-blue-500/30 rounded-full blur-[100px] absolute bottom-10 right-10 animate-pulse-slow delay-500" />
       </div>
 
-      {/* ==== Contact Info + Form ==== */}
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        {/* ==== Contact Info ==== */}
-        <motion.div
-          initial={{ x: -50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="backdrop-blur-xl bg-white/10 border border-white/10 rounded-2xl p-8 shadow-lg"
-        >
-          <motion.h3
-            className="text-3xl font-extrabold mb-3"
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* ==== Heading ==== */}
+        <div className="text-center mb-16">
+          <motion.h2
+            className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight"
             initial={{ backgroundPositionX: "0%" }}
             animate={{ backgroundPositionX: "200%" }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
             style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+              backgroundImage: "linear-gradient(90deg, #00ffff, #3b82f6, #14b8a6, #00ffff)",
               backgroundSize: "200%",
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}
           >
-            Get In Touch
-          </motion.h3>
+            Contact <span className="text-white">Us</span>
+          </motion.h2>
 
-          <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
-
-          <p className="text-gray-300 mb-8">
-            Let’s discuss how InfraVibe Tech can transform your business
-            digitally. We’re just a message away!
+          <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
+          <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+            Connect with Infra VibeTech — whether you need web design, marketing,
+            or digital transformation, we’re here to take your business forward.
           </p>
+        </div>
 
-          <div className="space-y-4 text-left">
-            <div className="flex items-center gap-4">
-              <Phone className="text-cyan-400 w-6 h-6" />
-              <p className="text-gray-200">+91 7860225993</p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Mail className="text-blue-400 w-6 h-6" />
-              <p className="text-gray-200">infravibetech@gmail.com</p>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <MapPin className="text-emerald-400 w-6 h-6 mt-1" />
-              <p className="text-gray-200">
-                Sunder Nagar Colony, Bhankharpur, Punjab – 140201
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <a
-              href="https://www.google.com/maps/dir//InfraVibe+Tech,+Sunder+Nagar+Colony,+Bhankharpur,+Punjab+140201"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-5 py-3 rounded-xl font-semibold shadow-md hover:shadow-cyan-500/30 transition-all"
-            >
-              Get Directions
-            </a>
-          </div>
-        </motion.div>
-
-        {/* ==== Contact Form ==== */}
-        <motion.div
-          initial={{ x: 50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="backdrop-blur-xl bg-white/10 border border-white/10 rounded-2xl p-8 shadow-lg"
-        >
-          <motion.h3
-            className="text-3xl font-extrabold mb-3"
-            initial={{ backgroundPositionX: "0%" }}
-            animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-              backgroundSize: "200%",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
+        {/* ==== Info + Form ==== */}
+        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
+          {/* ==== Info Box (Left) ==== */}
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-xl hover:shadow-cyan-500/10 transition-shadow"
           >
-            Send Us a Message
-          </motion.h3>
-
-          <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
-
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-              required
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              rows={4}
-              value={form.message}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
-              required
-            />
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              type="submit"
-              disabled={loading}
-              className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-cyan-500/30 transition-all disabled:opacity-70"
+            <motion.h3
+              className="text-3xl font-extrabold mb-3"
+              initial={{ backgroundPositionX: "0%" }}
+              animate={{ backgroundPositionX: "200%" }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              style={{
+                backgroundImage: "linear-gradient(90deg, #00ffff, #3b82f6, #14b8a6, #00ffff)",
+                backgroundSize: "200%",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
             >
-              {loading ? (
-                <span>Sending...</span>
-              ) : (
-                <>
-                  <Send className="w-5 h-5" /> Send Message
-                </>
-              )}
-            </motion.button>
-          </form>
-        </motion.div>
+              Get In Touch
+            </motion.h3>
+
+            <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
+
+            <p className="text-gray-300 mb-8 flex-grow">
+              Let’s discuss how Infra VibeTech can transform your business
+              digitally. We’re just a message away!
+            </p>
+
+            <div className="space-y-6 text-left">
+              {/* Phone */}
+              <div className="flex items-center gap-4">
+                <Phone className="text-cyan-400 w-6 h-6 p-1 rounded-full bg-white/10" />
+                <a
+                  href="tel:+917860225993"
+                  className="text-gray-200 hover:text-cyan-400 transition font-medium"
+                >
+                  +91 7860225993
+                </a>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center gap-4">
+                <Mail className="text-blue-400 w-6 h-6 p-1 rounded-full bg-white/10" />
+                <a
+                  href="mailto:infravibetech@gmail.com"
+                  className="text-gray-200 hover:text-blue-400 transition font-medium"
+                >
+                  infravibetech@gmail.com
+                </a>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-start gap-4">
+                <MapPin className="text-emerald-400 w-6 h-6 mt-1 p-1 rounded-full bg-white/10" />
+                <p className="text-gray-200">
+                  Sunder Nagar Colony, Bhankharpur, Punjab – 140201
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <a
+                href="https://www.google.com/maps/dir//InfraVibe+Tech,+Sunder+Nagar+Colony,+Bhankharpur,+Punjab+140201"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-cyan-500/30 transition-all hover:ring-2 ring-offset-2 ring-cyan-400 ring-offset-gray-900"
+              >
+                Get Directions
+              </a>
+            </div>
+          </motion.div>
+
+          {/* ==== Contact Form (Right) ==== */}
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-xl hover:shadow-blue-500/10 transition-shadow"
+          >
+            <motion.h3
+              className="text-3xl font-extrabold mb-3"
+              initial={{ backgroundPositionX: "0%" }}
+              animate={{ backgroundPositionX: "200%" }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              style={{
+                backgroundImage: "linear-gradient(90deg, #00ffff, #3b82f6, #14b8a6, #00ffff)",
+                backgroundSize: "200%",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Send Us a Message
+            </motion.h3>
+
+            <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
+
+            {/* ADDED: ref={formRef} to link the form to the useRef hook */}
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              <input
+                type="text"
+                name="name" // The 'name' attribute is critical for EmailJS!
+                placeholder="Your Name"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full px-5 py-3 rounded-xl bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 border border-transparent focus:border-cyan-400 transition"
+                required
+              />
+
+              <input
+                type="email"
+                name="email" // The 'name' attribute is critical for EmailJS!
+                placeholder="Your Email"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full px-5 py-3 rounded-xl bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 border border-transparent focus:border-blue-400 transition"
+                required
+              />
+
+              <textarea
+                name="message" // The 'name' attribute is critical for EmailJS!
+                placeholder="Your Message"
+                rows={5}
+                value={form.message}
+                onChange={handleChange}
+                className="w-full px-5 py-3 rounded-xl bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 border border-transparent focus:border-emerald-400 transition resize-none"
+                required
+              />
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={loading}
+                className="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg py-3 rounded-full shadow-lg shadow-cyan-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </div>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" /> Send Message
+                  </>
+                )}
+              </motion.button>
+            </form>
+          </motion.div>
+        </div>
       </div>
+
 
       {/* ==== Google Map ==== */}
-      <div className="mt-16">
+      <div className="mt-20 max-w-6xl mx-auto relative z-10">
+        <h3 className="text-2xl font-bold text-white mb-4 border-l-4 border-teal-400 pl-3">Our Location</h3>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3422.7106818706933!2d76.84080557523337!3d30.648463674619273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fee2c65e24407%3A0xe999b69b13bbd504!2sInfraVibe%20Tech!5e0!3m2!1sen!2sin!4v1730300000000!5m2!1sen!2sin"
+          // Updated width and height to be responsive and consistent
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2830.409678358663!2d76.8327561745943!3d30.60430909182963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f95b980cfcbb5%3A0x72f3d0d6acfb54f7!2sInfra%20VibeTech!5e1!3m2!1sen!2sin!4v1762428706735!5m2!1sen!2sin"
           width="100%"
-          height="400"
-          allowFullScreen
+          height="450"
+          allowFullScreen=""
           loading="lazy"
-          className="rounded-2xl border-none shadow-lg"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="rounded-2xl border-4 border-white/10 shadow-2xl"
         ></iframe>
       </div>
+      
+      {/* CSS for custom animation and font */}
+      <style jsx>{`
+        .bg-premium {
+          background-color: #0d1117; /* Dark base color */
+        }
+        @keyframes pulse-slow {
+          0%, 100% {
+            transform: scale(1) translate(-50%, -50%);
+          }
+          50% {
+            transform: scale(1.05) translate(-50%, -50%);
+          }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 8s infinite ease-in-out;
+        }
+        .animate-pulse-slow.delay-500 {
+          animation-delay: -4s; /* Start half cycle out of phase */
+        }
+      `}</style>
     </section>
   );
 }

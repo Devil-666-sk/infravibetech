@@ -7,7 +7,7 @@ const features = [
   {
     icon: <ShieldCheck className="w-10 h-10 text-emerald-400" aria-hidden="true" />,
     title: "Trusted & Reliable",
-    desc: "InfraVibe Tech ensures trust and transparency by delivering consistent quality and reliable partnerships to every client.",
+    desc: "Infra VibeTech ensures trust and transparency by delivering consistent quality and reliable partnerships to every client.",
   },
   {
     icon: <Rocket className="w-10 h-10 text-blue-400" aria-hidden="true" />,
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
         <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
 
         <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-12">
-          Discover why <strong>InfraVibe Tech</strong> is your trusted partner for digital growth —
+          Discover why <strong>Infra VibeTech</strong> is your trusted partner for digital growth —
           combining innovation, reliability, and client-first commitment.
         </p>
 
