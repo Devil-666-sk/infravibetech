@@ -1,7 +1,7 @@
-// components/Navbar.tsx
+// components/navbar/Navbar.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,15 +16,23 @@ export default function Navbar() {
   const [mobileTechOpen, setMobileTechOpen] = useState(false);
   const pathname = usePathname();
 
+  // ✅ Automatically control dropdown based on route
+  useEffect(() => {
+    if (pathname.startsWith("/services")) {
+      setServicesOpen(true);
+    } else {
+      setServicesOpen(false);
+    }
+  }, [pathname]);
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Services", dropdown: true },
+    { name: "Services", path: "/services", dropdown: true },
     { name: "Projects", path: "/projects" },
     { name: "Contact", path: "/contact" },
   ];
 
-  // ✅ Updated Services (Official List)
   const digitalServices = [
     { name: "Web Design & Development", path: "/services/web-development" },
     { name: "SEO Optimization", path: "/services/seo" },
@@ -48,11 +56,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* === LOGO === */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 group"
-          aria-label="Infra VibeTech Home"
-        >
+        <Link href="/" className="flex items-center gap-2 group" aria-label="Infra VibeTech Home">
           <motion.div
             animate={{
               boxShadow: [
@@ -74,9 +78,7 @@ export default function Navbar() {
             />
           </motion.div>
           <div>
-            <motion.h1
-              className="text-[18px] font-extrabold bg-gradient-to-r from-[#00ffae] via-[#00e0ff] to-[#0095ff] bg-clip-text text-transparent animate-gradient"
-            >
+            <motion.h1 className="text-[18px] font-extrabold bg-gradient-to-r from-[#00ffae] via-[#00e0ff] to-[#0095ff] bg-clip-text text-transparent animate-gradient">
               Infra <span className="text-[#00e0ff]">VibeTech</span>
             </motion.h1>
             <p className="text-[10px] text-white/70">
@@ -98,7 +100,17 @@ export default function Navbar() {
                   onMouseEnter={() => setServicesOpen(true)}
                   onMouseLeave={() => setServicesOpen(false)}
                 >
-                  <button className="text-gray-200 hover:text-white flex items-center gap-1">
+                  <Link
+                    href="/service"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setServicesOpen(!servicesOpen);
+                      setTimeout(() => {
+                        window.location.href = "/services";
+                      }, 300);
+                    }}
+                    className="text-gray-200 hover:text-white flex items-center gap-1 cursor-pointer"
+                  >
                     {link.name}
                     <motion.span
                       animate={{ rotate: servicesOpen ? 180 : 0 }}
@@ -107,7 +119,7 @@ export default function Navbar() {
                     >
                       ▼
                     </motion.span>
-                  </button>
+                  </Link>
 
                   <AnimatePresence>
                     {servicesOpen && (
@@ -177,7 +189,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* === HAMBURGER === */}
+        {/* === MOBILE MENU BUTTON === */}
         <button
           aria-label="Menu Toggle"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -238,16 +250,12 @@ export default function Navbar() {
                           >
                             {/* Digital Services */}
                             <button
-                              onClick={() =>
-                                setMobileDigitalOpen(!mobileDigitalOpen)
-                              }
+                              onClick={() => setMobileDigitalOpen(!mobileDigitalOpen)}
                               className="flex justify-center w-full py-2 text-gray-700 font-medium"
                             >
                               🌐 Digital Services
                               <motion.span
-                                animate={{
-                                  rotate: mobileDigitalOpen ? 180 : 0,
-                                }}
+                                animate={{ rotate: mobileDigitalOpen ? 180 : 0 }}
                                 transition={{ duration: 0.2 }}
                                 className="ml-1 text-sm"
                               >
@@ -284,9 +292,7 @@ export default function Navbar() {
                             >
                               💻 Technical Services
                               <motion.span
-                                animate={{
-                                  rotate: mobileTechOpen ? 180 : 0,
-                                }}
+                                animate={{ rotate: mobileTechOpen ? 180 : 0 }}
                                 transition={{ duration: 0.2 }}
                                 className="ml-1 text-sm"
                               >
