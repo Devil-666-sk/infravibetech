@@ -23,7 +23,7 @@ export default function Footer() {
       hover: "hover:shadow-[0_0_15px_#1877F2]",
     },
     {
-      href: "https://www.instagram.com/infravibetech/",
+      href: "https://www.instagram.com/infra_vibe_tech/",
       icon: <Instagram className="w-5 h-5" />,
       bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
       hover: "hover:shadow-[0_0_15px_#DD2A7B]",
@@ -134,10 +134,10 @@ export default function Footer() {
             <li className="flex justify-center sm:justify-start items-center gap-2">
               <Mail className="w-4 h-4 text-teal-400" />
               <a
-                href="mailto:infravibetech@gmail.com"
+                href="mailto:info@infravibetech.com"
                 className="hover:text-teal-400"
               >
-                infravibetech@gmail.com
+                info@infravibetech.com
               </a>
             </li>
             <li className="flex justify-center sm:justify-start items-center gap-2">

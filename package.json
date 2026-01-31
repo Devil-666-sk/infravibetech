@@ -12,15 +12,20 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "emailjs-com": "^3.2.0",
+    "firebase": "^12.6.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.545.0",
     "next": "15.5.7",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.0",
+    "next": "15.5.5",
     "next-sitemap": "^4.2.3",
     "phosphor-react": "^1.4.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-slick": "^0.31.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "swiper": "^12.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

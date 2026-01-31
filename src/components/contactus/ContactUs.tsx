@@ -1,16 +1,11 @@
-"use client"; // This MUST be the absolute first line to fix the error.
+"use client";
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, CheckCircle, XCircle, Info } from "lucide-react";
-import { useState, useCallback, useRef } from "react"; 
+import { useState, useCallback, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
-
-// NOTE for deployment: In a standard React/Next.js setup, you'd install EmailJS and import it like this:
-// import emailjs from '@emailjs/browser';
-// For this single-file environment, we'll assume the library is initialized or available globally.
-// In your actual app, ensure EmailJS is properly initialized (e.g., in a main layout or utility file).
-
-// --- Custom Notification Component (Replaces alert() ---
+// ✅ Notification Component
 const NotificationMessage = ({ notification, setNotification }) => {
   if (!notification.message) return null;
 
@@ -20,7 +15,7 @@ const NotificationMessage = ({ notification, setNotification }) => {
     info: "bg-yellow-600 border-yellow-700 text-white",
   };
 
-  const Icon = notification.type === 'success' ? CheckCircle : notification.type === 'error' ? XCircle : Info;
+  const Icon = notification.type === "success" ? CheckCircle : notification.type === "error" ? XCircle : Info;
 
   return (
     <motion.div
@@ -45,83 +40,62 @@ const NotificationMessage = ({ notification, setNotification }) => {
   );
 };
 
-// --- Main Component ---
+// ✅ Main Component
 export default function ContactUs() {
-  const formRef = useRef(); // Use ref to access the form DOM element
+  // ✅ Fixed: Added correct typing for formRef
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState({ message: "", type: null });
 
-  // IMPORTANT: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL EMAILJS KEYS!
+  // ✅ Your EmailJS environment variables
   const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
   const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
   const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
-  // Function to show notification and auto-dismiss
-  const showNotification = useCallback((message, type) => {
+  const showNotification = useCallback((message: string, type: "success" | "error" | "info") => {
     setNotification({ message, type });
-    // Auto-dismiss after 5 seconds
     const timer = setTimeout(() => {
       setNotification({ message: "", type: null });
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.message) {
-      showNotification("Please fill all fields before submitting!", 'info');
+      showNotification("Please fill all fields before submitting!", "info");
       return;
     }
-    
-    // Check for EmailJS readiness
-    if (typeof emailjs === 'undefined' || !formRef.current || SERVICE_ID.startsWith('YOUR_')) {
-        console.error("EmailJS setup incomplete. Please check keys and library initialization.");
-        showNotification("Email setup incomplete. Please update SERVICE_ID, TEMPLATE_ID, and PUBLIC_KEY.", 'error');
-        // Fallback to local simulation if EmailJS is not configured
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setLoading(false);
-        return;
-    }
 
+    if (!formRef.current) {
+      showNotification("Form reference not found!", "error");
+      return;
+    }
 
     setLoading(true);
 
     try {
-      // ----------------------------------------------------------------------
-      // ACTUAL EMAILJS CALL
-      // The sendForm method uses the ref to get all form data by input 'name' attributes.
-      // ----------------------------------------------------------------------
-      
-      // NOTE: In a real environment, you must initialize EmailJS: 
-      // emailjs.init(PUBLIC_KEY); // if not using the key in sendForm
-      
-      const result = await emailjs.sendForm(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        formRef.current, // Pass the form reference
-        PUBLIC_KEY        // Pass the Public Key
-      );
+      const result = await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+      console.log("EmailJS Result:", result.text);
 
-      console.log('EmailJS Result:', result.text);
-      
-      showNotification("Message sent successfully! We’ll contact you soon.", 'success');
+      showNotification("Message sent successfully! We’ll contact you soon.", "success");
       setForm({ name: "", email: "", message: "" });
-
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission Error:", error);
-      showNotification(`Failed to send message: ${error.text || 'Network Error'}`, 'error');
+      showNotification(`Failed to send message: ${error.text || "Network Error"}`, "error");
     } finally {
       setLoading(false);
     }
@@ -130,19 +104,18 @@ export default function ContactUs() {
   return (
     <section
       id="contact"
-      // Added Inter font and adjusted background for better contrast
       className="bg-gray-900 font-['Inter'] relative w-full text-white py-16 md:py-24 px-6 md:px-12 lg:px-20 overflow-hidden"
     >
       <NotificationMessage notification={notification} setNotification={setNotification} />
 
-      {/* Background decoration for premium feel */}
+      {/* Background glow */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
         <div className="w-96 h-96 bg-cyan-500/30 rounded-full blur-[100px] absolute top-10 left-10 animate-pulse-slow" />
         <div className="w-80 h-80 bg-blue-500/30 rounded-full blur-[100px] absolute bottom-10 right-10 animate-pulse-slow delay-500" />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* ==== Heading ==== */}
+        {/* === Heading === */}
         <div className="text-center mb-16">
           <motion.h2
             className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight"
@@ -161,14 +134,14 @@ export default function ContactUs() {
 
           <div className="w-24 h-1 mx-auto mt-3 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
           <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
-            Connect with Infra VibeTech — whether you need web design, marketing,
-            or digital transformation, we’re here to take your business forward.
+            Connect with Infra VibeTech — whether you need web design, marketing, or digital transformation,
+            we’re here to take your business forward.
           </p>
         </div>
 
-        {/* ==== Info + Form ==== */}
+        {/* === Info + Form === */}
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
-          {/* ==== Info Box (Left) ==== */}
+          {/* Left: Contact Info */}
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -193,23 +166,17 @@ export default function ContactUs() {
             <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
 
             <p className="text-gray-300 mb-8 flex-grow">
-              Let’s discuss how Infra VibeTech can transform your business
-              digitally. We’re just a message away!
+              Let’s discuss how Infra VibeTech can transform your business digitally. We’re just a message away!
             </p>
 
             <div className="space-y-6 text-left">
-              {/* Phone */}
               <div className="flex items-center gap-4">
                 <Phone className="text-cyan-400 w-6 h-6 p-1 rounded-full bg-white/10" />
-                <a
-                  href="tel:+917860225993"
-                  className="text-gray-200 hover:text-cyan-400 transition font-medium"
-                >
+                <a href="tel:+917860225993" className="text-gray-200 hover:text-cyan-400 transition font-medium">
                   +91 7860225993
                 </a>
               </div>
 
-              {/* Email */}
               <div className="flex items-center gap-4">
                 <Mail className="text-blue-400 w-6 h-6 p-1 rounded-full bg-white/10" />
                 <a
@@ -220,12 +187,9 @@ export default function ContactUs() {
                 </a>
               </div>
 
-              {/* Location */}
               <div className="flex items-start gap-4">
                 <MapPin className="text-emerald-400 w-6 h-6 mt-1 p-1 rounded-full bg-white/10" />
-                <p className="text-gray-200">
-                  Sunder Nagar Colony, Bhankharpur, Punjab – 140201
-                </p>
+                <p className="text-gray-200">Sunder Nagar Colony, Bhankharpur, Punjab – 140201</p>
               </div>
             </div>
 
@@ -241,7 +205,7 @@ export default function ContactUs() {
             </div>
           </motion.div>
 
-          {/* ==== Contact Form (Right) ==== */}
+          {/* Right: Contact Form */}
           <motion.div
             initial={{ x: 50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -265,11 +229,10 @@ export default function ContactUs() {
 
             <div className="w-20 h-1 mb-6 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-teal-400" />
 
-            {/* ADDED: ref={formRef} to link the form to the useRef hook */}
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
               <input
                 type="text"
-                name="name" // The 'name' attribute is critical for EmailJS!
+                name="name"
                 placeholder="Your Name"
                 value={form.name}
                 onChange={handleChange}
@@ -279,7 +242,7 @@ export default function ContactUs() {
 
               <input
                 type="email"
-                name="email" // The 'name' attribute is critical for EmailJS!
+                name="email"
                 placeholder="Your Email"
                 value={form.email}
                 onChange={handleChange}
@@ -288,7 +251,7 @@ export default function ContactUs() {
               />
 
               <textarea
-                name="message" // The 'name' attribute is critical for EmailJS!
+                name="message"
                 placeholder="Your Message"
                 rows={5}
                 value={form.message}
@@ -306,9 +269,26 @@ export default function ContactUs() {
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
-                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 
+3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Sending...
                   </div>
@@ -323,40 +303,44 @@ export default function ContactUs() {
         </div>
       </div>
 
-
-      {/* ==== Google Map ==== */}
+      {/* === Map === */}
       <div className="mt-20 max-w-6xl mx-auto relative z-10">
-        <h3 className="text-2xl font-bold text-white mb-4 border-l-4 border-teal-400 pl-3">Our Location</h3>
+        <h3
+          className="text-2xl font-bold text-white mb-4 border-l-4 border-teal-400 pl-3"
+          style={{
+            backgroundImage: "linear-gradient(90deg, #00ffff, #3b82f6, #14b8a6, #00ffff)",
+            backgroundSize: "200%",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          Our Location
+        </h3>
         <iframe
-          // Updated width and height to be responsive and consistent
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2830.409678358663!2d76.8327561745943!3d30.60430909182963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390f95b980cfcbb5%3A0x72f3d0d6acfb54f7!2sInfra%20VibeTech!5e1!3m2!1sen!2sin!4v1762428706735!5m2!1sen!2sin"
           width="100%"
           height="450"
-          allowFullScreen=""
+          allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           className="rounded-2xl border-4 border-white/10 shadow-2xl"
         ></iframe>
       </div>
-      
-      {/* CSS for custom animation and font */}
+
       <style jsx>{`
-        .bg-premium {
-          background-color: #0d1117; /* Dark base color */
-        }
         @keyframes pulse-slow {
           0%, 100% {
-            transform: scale(1) translate(-50%, -50%);
+            transform: scale(1);
           }
           50% {
-            transform: scale(1.05) translate(-50%, -50%);
+            transform: scale(1.05);
           }
         }
         .animate-pulse-slow {
           animation: pulse-slow 8s infinite ease-in-out;
         }
         .animate-pulse-slow.delay-500 {
-          animation-delay: -4s; /* Start half cycle out of phase */
+          animation-delay: -4s;
         }
       `}</style>
     </section>

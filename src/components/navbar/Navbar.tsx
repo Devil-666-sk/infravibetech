@@ -1,361 +1,199 @@
-// components/navbar/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone, ChevronDown, Laptop, Cpu } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/logo.webp";
 
+const DIGITAL_SERVICES = [
+  { title: "Web Design & Development", href: "/services/web-development" },
+  { title: "SEO (On/Off Page)", href: "/services/seo" },
+  { title: "Social Media Management & Ads", href: "/services/smm" },
+  { title: "Lead Generation & Branding", href: "/services/lead-generation" },
+  { title: "All-in-One Digital Marketing", href: "/services/marketing" },
+];
+
+const TECH_SERVICES = [
+  { title: "Laptop & PC Repair", href: "/services/repair" },
+  { title: "New & Refurbished Laptop Sales", href: "/services/laptop-sales" },
+  { title: "Laptop on Rent", href: "/services/rental" },
+  { title: "AMC & IT Support", href: "/services/it-support" },
+  { title: "Technical Support", href: "/services/tech-support" },
+];
+
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileDigitalOpen, setMobileDigitalOpen] = useState(false);
-  const [mobileTechOpen, setMobileTechOpen] = useState(false);
-  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // ✅ Automatically control dropdown based on route
   useEffect(() => {
-    if (pathname.startsWith("/services")) {
-      setServicesOpen(true);
-    } else {
-      setServicesOpen(false);
-    }
-  }, [pathname]);
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services", dropdown: true },
-    { name: "Projects", path: "/projects" },
-    { name: "Contact", path: "/contact" },
-  ];
-
-  const digitalServices = [
-    { name: "Web Design & Development", path: "/services/web-development" },
-    { name: "SEO Optimization", path: "/services/seo" },
-    { name: "Social Media Management & Ads", path: "/services/social-media" },
-    { name: "Lead Generation & Branding", path: "/services/branding" },
-  ];
-
-  const technicalServices = [
-    { name: "Laptop & PC Repair", path: "/technical/laptop-repair" },
-    { name: "New & Refurbished Laptop Sales", path: "/technical/sales" },
-    { name: "Laptop on Rent", path: "/technical/laptop-rent" },
-  ];
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_25px_rgba(0,200,150,0.15)]"
-      aria-label="Infra VibeTech Main Navigation"
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "backdrop-blur-xl bg-white/70 shadow"
+          : "bg-white/60 backdrop-blur"
+      }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        {/* === LOGO === */}
-        <Link href="/" className="flex items-center gap-2 group" aria-label="Infra VibeTech Home">
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 15px rgba(0,200,130,0.3)",
-                "0 0 25px rgba(0,200,130,0.5)",
-                "0 0 15px rgba(0,200,130,0.3)",
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-11 h-11 rounded-full bg-white/10 border border-white/30 flex items-center justify-center overflow-hidden"
-          >
+      <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="rounded-full p-1 bg-white shadow-md group-hover:shadow-xl transition">
             <Image
               src={logo}
-              alt="Infra VibeTech Logo | Empowering Businesses Digitally & Technically"
-              width={50}
-              height={50}
-              title="Infra VibeTech"
-              priority
+              alt="InfraVibe Tech Logo"
+              width={42}
+              height={42}
+              className="rounded-full group-hover:scale-105 transition"
             />
-          </motion.div>
-          <div>
-            <motion.h1 className="text-[18px] font-extrabold bg-gradient-to-r from-[#00ffae] via-[#00e0ff] to-[#0095ff] bg-clip-text text-transparent animate-gradient">
-              Infra <span className="text-[#00e0ff]">VibeTech</span>
-            </motion.h1>
-            <p className="text-[10px] text-white/70">
-              Empowering Businesses Digitally & Technically
-            </p>
           </div>
+
+          <motion.h2
+            className="text-2xl font-extrabold"
+            animate={{ backgroundPositionX: "200%" }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
+              backgroundSize: "200%",
+              WebkitBackgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            InfraVibe Tech
+          </motion.h2>
         </Link>
 
-        {/* === DESKTOP MENU === */}
-        <div className="hidden lg:flex items-center space-x-6">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.path;
-
-            if (link.dropdown) {
-              return (
-                <div
-                  key={link.name}
-                  className="relative group"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
-                >
-                  <Link
-                    href="/service"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setServicesOpen(!servicesOpen);
-                      setTimeout(() => {
-                        window.location.href = "/services";
-                      }, 300);
-                    }}
-                    className="text-gray-200 hover:text-white flex items-center gap-1 cursor-pointer"
-                  >
-                    {link.name}
-                    <motion.span
-                      animate={{ rotate: servicesOpen ? 180 : 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="text-xs"
-                    >
-                      ▼
-                    </motion.span>
-                  </Link>
-
-                  <AnimatePresence>
-                    {servicesOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute left-1/2 -translate-x-1/2 mt-3 w-[520px] bg-white/95 text-gray-900 backdrop-blur-md border border-gray-200 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] grid grid-cols-2 gap-4 p-5"
-                      >
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">
-                            🌐 Digital Services
-                          </h4>
-                          {digitalServices.map((item) => (
-                            <Link
-                              key={item.name}
-                              href={item.path}
-                              className="block text-sm text-gray-700 hover:text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-[#00ffae] hover:to-[#0095ff] transition-all duration-300 py-1"
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
-                        </div>
-
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">
-                            💻 Technical Services
-                          </h4>
-                          {technicalServices.map((item) => (
-                            <Link
-                              key={item.name}
-                              href={item.path}
-                              className="block text-sm text-gray-700 hover:text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-[#00ffae] hover:to-[#0095ff] transition-all duration-300 py-1"
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={link.name}
-                href={link.path || "#"}
-                className={`transition-all duration-300 ${
-                  isActive
-                    ? "text-white font-semibold border-b-2 border-green-400"
-                    : "text-gray-300 hover:text-white"
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-
-          <Link
-            href="/contact"
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#00ffae] to-[#0095ff] text-white font-semibold shadow-md hover:scale-105 transition-all duration-300"
+        {/* DESKTOP MENU */}
+        <div className="hidden lg:flex items-center gap-8">
+          <div
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+            className="relative"
           >
-            Get Quote
-          </Link>
+            <NavItem href="/services">
+              <div className="flex items-center gap-1">
+                Services <ChevronDown size={16} />
+              </div>
+            </NavItem>
+
+            {/* ✅ CLEAN & COMPACT DROPDOWN */}
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 mt-3 w-[420px]
+                             rounded-xl bg-white/90 backdrop-blur-xl
+                             shadow-2xl border border-white/40
+                             p-4 grid grid-cols-2 gap-4"
+                >
+                  <div>
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-600">
+                      <Laptop size={16} /> Digital Services
+                    </h4>
+                    <ul className="space-y-1">
+                      {DIGITAL_SERVICES.map((item) => (
+                        <li key={item.title}>
+                          <Link
+                            href={item.href}
+                            className="relative block px-3 py-2 text-sm rounded-lg
+                                       transition-all duration-200
+                                       hover:translate-x-1 group"
+                          >
+                            <span className="absolute inset-0 -z-10 rounded-lg
+                                             bg-gradient-to-r from-cyan-400/30 via-blue-500/30 to-cyan-300/30
+                                             opacity-0 blur-lg transition group-hover:opacity-100" />
+                            {item.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-600">
+                      <Cpu size={16} /> Technical Services
+                    </h4>
+                    <ul className="space-y-1">
+                      {TECH_SERVICES.map((item) => (
+                        <li key={item.title}>
+                          <Link
+                            href={item.href}
+                            className="relative block px-3 py-2 text-sm rounded-lg
+                                       transition-all duration-200
+                                       hover:translate-x-1 group"
+                          >
+                            <span className="absolute inset-0 -z-10 rounded-lg
+                                             bg-gradient-to-r from-cyan-400/30 via-blue-500/30 to-cyan-300/30
+                                             opacity-0 blur-lg transition group-hover:opacity-100" />
+                            {item.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <NavItem href="/about">About</NavItem>
+          <NavItem href="/why-us">Why Us</NavItem>
+          <NavItem href="/">Portfolio</NavItem>
+          <NavItem href="/contact">Contact</NavItem>
+
+          <a
+            href="tel:7860225993"
+            className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow hover:scale-105 transition"
+          >
+            <Phone size={18} className="inline mr-1" /> Call Now
+          </a>
         </div>
 
-        {/* === MOBILE MENU BUTTON === */}
-        <button
-          aria-label="Menu Toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="lg:hidden relative w-11 h-11 flex items-center justify-center rounded-lg bg-white/10 border border-white/20 shadow-[0_0_15px_rgba(0,200,130,0.3)]"
-        >
-          <motion.div
-            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: -6 }}
-            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
-          />
-          <motion.div
-            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
-          />
-          <motion.div
-            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 6 }}
-            className="absolute w-6 h-[2px] bg-gradient-to-r from-green-400 to-blue-400 rounded-full"
-          />
+        {/* MOBILE BUTTON */}
+        <button className="lg:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-      </div>
+      </nav>
 
-      {/* === MOBILE MENU === */}
+      {/* MOBILE MENU (unchanged) */}
       <AnimatePresence>
-        {menuOpen && (
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -15 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/95 text-gray-900 border-t border-gray-200 backdrop-blur-xl shadow-md"
+            exit={{ opacity: 0, y: -20 }}
+            className="lg:hidden bg-white shadow-xl p-5 space-y-4"
           >
-            <ul className="flex flex-col items-center py-6 gap-3 text-base font-medium">
-              {navLinks.map((item) => {
-                if (item.dropdown) {
-                  return (
-                    <div key={item.name} className="w-full text-center">
-                      <button
-                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                        className="flex justify-center items-center w-full py-2 font-semibold text-gray-800"
-                      >
-                        {item.name}
-                        <motion.span
-                          animate={{ rotate: mobileServicesOpen ? 180 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="ml-1 text-sm"
-                        >
-                          ▼
-                        </motion.span>
-                      </button>
-
-                      <AnimatePresence>
-                        {mobileServicesOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            {/* Digital Services */}
-                            <button
-                              onClick={() => setMobileDigitalOpen(!mobileDigitalOpen)}
-                              className="flex justify-center w-full py-2 text-gray-700 font-medium"
-                            >
-                              🌐 Digital Services
-                              <motion.span
-                                animate={{ rotate: mobileDigitalOpen ? 180 : 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="ml-1 text-sm"
-                              >
-                                ▼
-                              </motion.span>
-                            </button>
-                            <AnimatePresence>
-                              {mobileDigitalOpen && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="px-6"
-                                >
-                                  {digitalServices.map((sub) => (
-                                    <Link
-                                      key={sub.name}
-                                      href={sub.path}
-                                      onClick={() => setMenuOpen(false)}
-                                      className="block text-sm text-gray-700 hover:text-green-600 py-1"
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-
-                            {/* Technical Services */}
-                            <button
-                              onClick={() => setMobileTechOpen(!mobileTechOpen)}
-                              className="flex justify-center w-full py-2 text-gray-700 font-medium"
-                            >
-                              💻 Technical Services
-                              <motion.span
-                                animate={{ rotate: mobileTechOpen ? 180 : 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="ml-1 text-sm"
-                              >
-                                ▼
-                              </motion.span>
-                            </button>
-                            <AnimatePresence>
-                              {mobileTechOpen && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="px-6"
-                                >
-                                  {technicalServices.map((sub) => (
-                                    <Link
-                                      key={sub.name}
-                                      href={sub.path}
-                                      onClick={() => setMenuOpen(false)}
-                                      className="block text-sm text-gray-700 hover:text-green-600 py-1"
-                                    >
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                }
-
-                return (
-                  <li key={item.name}>
-                    <Link
-                      href={item.path || "#"}
-                      onClick={() => setMenuOpen(false)}
-                      className={`px-3 py-2 rounded-md transition-all duration-300 ${
-                        pathname === item.path
-                          ? "bg-gradient-to-r from-green-400 to-blue-400 text-white"
-                          : "text-gray-700 hover:text-green-500"
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                );
-              })}
-
-              <Link
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
-                className="mt-4 px-5 py-2 rounded-lg bg-gradient-to-r from-[#00ffae] to-[#0095ff] text-white font-semibold shadow-md hover:scale-105 transition-transform duration-300"
-              >
-                Get Quote
-              </Link>
-            </ul>
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/why-us">Why Us</Link>
+            <Link href="/contact">Contact</Link>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </header>
+  );
+}
+
+function NavItem({ href, children }) {
+  return (
+    <Link
+      href={href}
+      className="relative px-3 py-1 rounded transition-all duration-300 group hover:scale-[1.06]"
+    >
+      <span className="absolute inset-0 -z-10 rounded-xl opacity-0 group-hover:opacity-100 blur-lg
+                       bg-gradient-to-r from-cyan-400/40 via-blue-500/40 to-cyan-300/40 transition" />
+      {children}
+    </Link>
   );
 }
