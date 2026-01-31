@@ -1,6 +1,5 @@
 
 import Navbar from "../components/navbar/Navbar";
-import HomeSection from "../components/hero/HomeSection";
 import ChatBot from "@/components/chatbot/ChatBot";
 import ServicesSection from "@/components/services/ServicesSection";
 import AboutSection from "@/components/about/AboutSection";
@@ -12,12 +11,13 @@ import OurProcess from "@/components/ourprocess/OurProcess";
 import ContactUs from "@/components/contactus/ContactUs";
 import Footer from "@/components/footer/Footer";
 import ProjectsPage from "@/components/project/ProjectsPage";
-
+import PinsPage from "@/components/PinsPage";
+import HeroSection from "../components/hero/HeroSection";
 export default function Home() {
   return (
     <>
     <Navbar />
-    <HomeSection />
+    <HeroSection />
     <ServicesSection />
     <ProjectsPage />
     <AboutSection />
@@ -29,6 +29,8 @@ export default function Home() {
     <ChatBot />
     <ContactUs />
     <Footer />
+    <PinsPage />
+    
     {/* <InfraVibeHome /> */}
     </>
   );
