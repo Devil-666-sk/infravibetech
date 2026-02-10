@@ -1,94 +1,19 @@
 "use client";
-
+import { Linkedin, Instagram, Facebook, Youtube, Phone, Mail, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import logo from "@/assets/logo.webp";
 
 export default function Footer() {
-  const socialLinks = [
-    {
-      href: "https://www.facebook.com/share/1DQcUzi9PP/",
-      icon: <Facebook className="w-5 h-5" />,
-      bg: "bg-[#1877F2]",
-      hover: "hover:shadow-[0_0_15px_#1877F2]",
-    },
-    {
-      href: "https://www.instagram.com/infra_vibe_tech/",
-      icon: <Instagram className="w-5 h-5" />,
-      bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
-      hover: "hover:shadow-[0_0_15px_#DD2A7B]",
-    },
-    {
-      href: "https://www.linkedin.com/company/infravibe-tech/",
-      icon: <Linkedin className="w-5 h-5" />,
-      bg: "bg-[#0A66C2]",
-      hover: "hover:shadow-[0_0_15px_#0A66C2]",
-    },
-    {
-      href: "https://www.youtube.com/@infravibetech",
-      icon: <Youtube className="w-5 h-5" />,
-      bg: "bg-[#FF0000]",
-      hover: "hover:shadow-[0_0_15px_#FF0000]",
-    },
-  ];
-
   return (
-    <footer className="relative bg-premium text-white pt-10 pb-6 px-6 sm:px-10 border-t border-white/10 overflow-hidden">
-      {/* === Background Glow === */}
-      <div className="absolute top-0 left-0 w-[14rem] h-[14rem] bg-gradient-to-r from-blue-500/15 to-teal-400/15 blur-[100px] rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-[18rem] h-[18rem] bg-gradient-to-l from-teal-400/15 to-blue-500/15 blur-[100px] rounded-full"></div>
+    <footer className="bg-gradient-to-br from-white via-blue-50 to-cyan-50 text-gray-700 py-14 px-6 border-t">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
 
-      {/* === Main Content === */}
-      <div className="relative max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 z-10 text-center sm:text-left">
-        {/* === Logo & About === */}
-        <div className="space-y-3 flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-3 justify-center sm:justify-start">
-            <Image
-              src={logo}
-              alt="Infra VibeTech Logo"
-              width={50}
-              height={50}
-              className="rounded-lg shadow-md"
-            />
-            <motion.h3
-              initial={{ backgroundPositionX: "0%" }}
-              animate={{ backgroundPositionX: "200%" }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-                backgroundSize: "200%",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-              className="text-xl sm:text-2xl font-extrabold tracking-wide"
-            >
-              Infra VibeTech
-            </motion.h3>
-          </div>
-          <p className="text-gray-300 text-sm leading-relaxed max-w-xs mx-auto sm:mx-0">
-            We design and digitally transform businesses through innovative
-            websites, SEO, and marketing solutions.
-          </p>
-        </div>
-
-        {/* === Quick Links === */}
-        <div className="space-y-3">
-          <motion.h4
-            className="text-lg font-semibold"
-            initial={{ backgroundPositionX: "0%" }}
+        {/* LEFT — BRAND */}
+        <div>
+          <motion.h2
+            className="text-xl md:text-2xl font-extrabold tracking-tight"
             animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             style={{
               backgroundImage:
                 "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
@@ -97,111 +22,101 @@ export default function Footer() {
               color: "transparent",
             }}
           >
-            Quick Links
-          </motion.h4>
-          <ul className="space-y-2 text-gray-300 text-sm">
-            {["Home", "About Us", "Services", "Contact"].map((item, i) => (
+            InfraVibe Tech
+          </motion.h2>
+
+          <p className="mt-3 text-cyan-600 font-semibold">
+            Empowering Businesses Digitally & Technically
+          </p>
+
+          <p className="mt-4 text-sm text-gray-600 leading-relaxed">
+            Providing professional IT solutions, laptop services, AMC support,
+            and high-performance digital marketing for modern businesses.
+          </p>
+
+          <p className="mt-4 text-xs text-gray-500">
+            GSTIN: 03GTXPK5286G1Z1
+          </p>
+        </div>
+
+        {/* CENTER — SERVICES */}
+        <div className="md:mx-auto">
+          <h3 className="text-gray-900 text-xl font-semibold mb-4">
+            Our Services
+          </h3>
+          <ul className="space-y-2 text-sm text-gray-600">
+            {[
+              { name: "Technical Support", link: "/services/technical-support" },
+              { name: "Digital Services", link: "/services/digital-services" },
+              { name: "Laptop & PC Repairing", link: "/services/repair" },
+              { name: "New & Refurbished Laptop & PC Sales", link: "/services/sales" },
+              { name: "Laptop & PC on Rent", link: "/services/rent" },
+            ].map((item, i) => (
               <li key={i}>
                 <Link
-                  href={`/${item.toLowerCase().replace(" ", "")}`}
-                  className="hover:text-teal-400 transition"
+                  href={item.link}
+                  className="hover:text-cyan-600 transition-all duration-300 hover:translate-x-1 inline-block"
                 >
-                  {item}
+                  • {item.name}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* === Contact Info === */}
-        <div className="space-y-3">
-          <motion.h4
-            className="text-lg font-semibold"
-            initial={{ backgroundPositionX: "0%" }}
-            animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-              backgroundSize: "200%",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Contact
-          </motion.h4>
-          <ul className="space-y-2 text-gray-300 text-sm">
-            <li className="flex justify-center sm:justify-start items-center gap-2">
-              <Mail className="w-4 h-4 text-teal-400" />
-              <a
-                href="mailto:info@infravibetech.com"
-                className="hover:text-teal-400"
-              >
-                info@infravibetech.com
-              </a>
-            </li>
-            <li className="flex justify-center sm:justify-start items-center gap-2">
-              <Phone className="w-4 h-4 text-teal-400" />
-              <a href="tel:+917860225993" className="hover:text-teal-400">
-                +91 78602 25993
-              </a>
-            </li>
-            <li className="flex justify-center sm:justify-start items-start gap-2">
-              <MapPin className="w-4 h-4 text-teal-400 mt-0.5" />
-              <p className="max-w-[180px] sm:max-w-none">
-                Sunder Nagar Colony, Bhankharpur, Punjab – 140201
-              </p>
-            </li>
-          </ul>
-        </div>
+        {/* RIGHT — CONTACT */}
+        <div>
+          <h3 className="text-gray-900 text-xl font-semibold mb-4">
+            Contact Us
+          </h3>
 
-        {/* === Follow Us === */}
-        <div className="space-y-3">
-          <motion.h4
-            className="text-lg font-semibold"
-            initial={{ backgroundPositionX: "0%" }}
-            animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-              backgroundSize: "200%",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Follow Us
-          </motion.h4>
-          <p className="text-gray-300 text-sm">
-            Stay connected with InfraVibe for updates and digital tips.
-          </p>
-          <div className="flex justify-center sm:justify-start gap-3">
-            {socialLinks.map((item, i) => (
-              <motion.a
-                key={i}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, rotate: 10 }}
-                whileTap={{ scale: 0.9 }}
-                className={`p-2.5 rounded-full text-white transition-all duration-300 ${item.bg} ${item.hover}`}
-              >
-                {item.icon}
-              </motion.a>
-            ))}
+          <div className="space-y-3 text-sm text-gray-600">
+            <a
+              href="tel:7860225993"
+              className="flex items-center gap-2 hover:text-cyan-600 transition-all duration-300 hover:translate-x-1"
+            >
+              <Phone size={16} /> 7860225993
+            </a>
+
+            <a
+              href="mailto:info@infravibetech.com"
+              className="flex items-center gap-2 hover:text-cyan-600 transition-all duration-300 hover:translate-x-1"
+            >
+              <Mail size={16} /> info@infravibetech.com
+            </a>
+
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Bhankharpur+Punjab+140201"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-cyan-600 transition-all duration-300 hover:translate-x-1"
+            >
+              <MapPin size={16} /> Bhankharpur, Punjab – 140201
+            </a>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 mt-6">
+            <a href="https://www.linkedin.com/company/infravibe-tech/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition">
+              <Linkedin size={20} />
+            </a>
+            <a href="https://www.instagram.com/infra_vibe_tech/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500 transition">
+              <Instagram size={20} />
+            </a>
+            <a href="https://www.facebook.com/share/1DQcUzi9PP/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
+              <Facebook size={20} />
+            </a>
+            <a href="https://www.youtube.com/@infravibetech" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition">
+              <Youtube size={20} />
+            </a>
           </div>
         </div>
+
       </div>
 
-      {/* === Bottom Bar === */}
-      <div className="relative mt-6 border-t border-white/10 pt-3 text-center">
-        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-          © {new Date().getFullYear()}{" "}
-          <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
-            Infra VibeTech
-          </span>{" "}
-          — All Rights Reserved.
-        </p>
+      {/* Bottom */}
+      <div className="text-center mt-12 text-xs text-gray-500 border-t pt-6">
+        © {new Date().getFullYear()} InfraVibe Tech. All Rights Reserved.
       </div>
     </footer>
   );
