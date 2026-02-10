@@ -1,7 +1,7 @@
 import HomeSection from "@/components/hero/HeroSection";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-import OurServices from "@/components/services/ServicesSection";
+import OurServices from "@/components/services/CoreServices";
 
 export default function ServicesPage() {
   return (

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo.webp"; // apna logo sahi path pe rakho
+import logo from "@/assets/logo.webp";
 
 interface Message {
   from: "bot" | "user";
@@ -13,11 +13,31 @@ interface Message {
   options?: string[];
 }
 
+const SERVICES = [
+  "🌐 Website Design & Development",
+  "🛒 E-Commerce Website",
+  "📈 SEO (Local + National)",
+  "📢 Google Ads & Social Media Ads",
+  "🎯 Lead Generation Campaigns",
+  "📱 Social Media Management",
+  "🛠 Laptop / PC Repair & AMC",
+  "💻 New & Refurbished Laptop Sales",
+  "🖥 Laptop on Rent",
+  "🔐 Server, Networking & Backup",
+];
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { from: "bot", text: "👋 Hi! Welcome to InfraVibeTech." },
-    { from: "bot", text: "How can I assist you today?" },
+    {
+      from: "bot",
+      text: "👋 Hi! Welcome to **InfraVibeTech** — IT & Digital Growth Experts.",
+    },
+    {
+      from: "bot",
+      text:
+        "We help businesses grow with websites, SEO, ads & complete IT support.\n\nHow can I help you today?",
+    },
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -29,140 +49,100 @@ export default function ChatBot() {
   const handleOption = (option: string) => {
     let reply: Message = { from: "bot", text: "" };
 
-    switch (option) {
-      case "About InfraVibeTech":
-        reply.text =
-          "InfraVibeTech is a complete IT and digital solutions company offering end-to-end services — from hardware support to online growth.";
-        break;
+    if (option === "About InfraVibeTech") {
+      reply.text =
+        "InfraVibeTech provides **Website Development, SEO, Digital Marketing, Lead Generation, IT Support, AMC & Laptop Services** for startups and businesses.\n\n📍 Serving PAN India.";
+    }
 
-      case "Our Services":
-        reply = {
-          from: "bot",
-          text: "Here are our main services 👇 Tap to connect:",
-          options: [
-            "🌐 Web Design & Development",
-            "📈 SEO (On-page & Off-page)",
-            "📱 Social Media Management & Ads",
-            "🎯 Lead Generation & Branding Campaigns",
-            "🛠️ Laptop & PC Repairing",
-            "💻 New & Refurbished Laptop Sales",
-            "🖥️ Laptop on Rent",
-          ],
-        };
-        break;
+    if (option === "Our Services") {
+      reply = {
+        from: "bot",
+        text: "Here are our professional services 👇",
+        options: SERVICES,
+      };
+    }
 
-      case "Get a Quote":
-        reply.text =
-          "Sure! Let's connect directly on WhatsApp for a personalized quote 👇";
-        break;
+    if (option === "Get Free Demo") {
+      reply.text =
+        "🎉 Great choice!\n\nWe offer **FREE website audit / FREE demo**.\nClick below to connect instantly on WhatsApp 👇";
+    }
 
-      case "Contact Team":
-        reply.text =
-          "You can reach our team directly on WhatsApp below 👇";
-        break;
-
-      default:
-        reply.text = "Please choose an option from below 😊";
+    if (option === "Contact Team") {
+      reply.text =
+        "📞 Our team is available on WhatsApp for instant support & quotes 👇";
     }
 
     setMessages((prev) => [...prev, { from: "user", text: option }, reply]);
   };
 
   const handleServiceClick = (service: string) => {
-    const whatsappLink = `https://wa.me/917860225993?text=Hi%20InfraVibeTech!%20I'm%20interested%20in%20${encodeURIComponent(
+    const whatsappLink = `https://wa.me/917860225993?text=Hi%20InfraVibeTech!%20I%20need%20${encodeURIComponent(
       service
     )}`;
-    const mailLink = `mailto:infravibetech@gmail.com?subject=Service%20Inquiry%20-%20${encodeURIComponent(
-      service
-    )}&body=Hi%20InfraVibeTech,%0D%0A%0D%0AI%27m%20interested%20in%20your%20${encodeURIComponent(
-      service
-    )}%20service.%0D%0APlease%20contact%20me%20with%20more%20details.%0D%0A%0D%0AThanks!`;
 
     setMessages((prev) => [
       ...prev,
       { from: "user", text: service },
       {
         from: "bot",
-        text: `Great choice! You can contact us via WhatsApp or Email below 👇\n\n📞 *${service}*`,
+        text:
+          `✅ *${service}*\n\nOur expert will assist you shortly.\nClick WhatsApp below 👇`,
       },
     ]);
 
-    setTimeout(() => {
-      window.open(whatsappLink, "_blank");
-    }, 700);
+    setTimeout(() => window.open(whatsappLink, "_blank"), 600);
   };
 
   return (
     <>
-      {/* Floating Chat Button */}
+      {/* Floating Button */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-500 via-teal-400 to-green-400 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all"
+        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-4 rounded-full shadow-xl"
         whileTap={{ scale: 0.9 }}
-        aria-label="Toggle Chat"
       >
-        {open ? <X size={24} /> : <MessageSquare size={26} />}
+        {open ? <X /> : <MessageSquare />}
       </motion.button>
 
-      {/* Chat Window */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-20 right-4 sm:right-6 z-40 w-[90%] sm:w-80 md:w-96 bg-white/30 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            exit={{ opacity: 0, y: 40 }}
+            className="fixed bottom-20 right-4 sm:right-6 z-40 w-[92%] sm:w-96 bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
-            {/* Background Logo */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
-              <Image
-                src={logo}
-                alt="InfraVibeTech Logo"
-                className="object-contain w-40 h-40 sm:w-56 sm:h-56"
-              />
-            </div>
-
             {/* Header */}
-            <div className="relative z-10 bg-gradient-to-r from-blue-500 via-teal-400 to-green-400 text-white p-3 font-semibold flex justify-between items-center">
-              <span>InfraVibe Assistant</span>
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Close Chat"
-                className="hover:scale-110 transition-transform"
-              >
-                <X size={20} />
-              </button>
+            <div className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-3 flex items-center gap-2">
+              <Image src={logo} alt="InfraVibeTech" className="w-7 h-7" />
+              <span className="font-semibold">InfraVibe Assistant</span>
             </div>
 
             {/* Messages */}
-            <div
-              className="relative z-10 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400/40 scrollbar-track-transparent px-3 pt-4 pb-2 space-y-3"
-              style={{ maxHeight: "22rem", scrollBehavior: "smooth" }}
-            >
-              {messages.map((msg, idx) => (
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+              {messages.map((msg, i) => (
                 <div
-                  key={idx}
+                  key={i}
                   className={`flex ${
                     msg.from === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
-                    className={`${
+                    className={`px-3 py-2 rounded-xl max-w-[80%] ${
                       msg.from === "user"
-                        ? "bg-gradient-to-r from-blue-500 via-teal-400 to-green-400 text-white rounded-l-2xl rounded-tr-2xl"
-                        : "bg-white/80 text-gray-800 rounded-r-2xl rounded-tl-2xl border border-gray-200/40"
-                    } px-3 py-2 text-sm max-w-[80%] shadow-sm whitespace-pre-line`}
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
                   >
                     {msg.text}
 
                     {msg.options && (
-                      <div className="mt-2 flex flex-col gap-2">
-                        {msg.options.map((opt, i) => (
+                      <div className="mt-2 space-y-2">
+                        {msg.options.map((opt) => (
                           <button
-                            key={i}
+                            key={opt}
                             onClick={() => handleServiceClick(opt)}
-                            className="bg-gradient-to-r from-green-400 to-blue-400 text-white text-xs font-medium py-2 px-3 rounded-xl hover:scale-105 transition"
+                            className="block w-full bg-gradient-to-r from-green-500 to-blue-500 text-white text-xs py-2 rounded-lg"
                           >
                             {opt}
                           </button>
@@ -170,19 +150,15 @@ export default function ChatBot() {
                       </div>
                     )}
 
-                    {(msg.text.includes("WhatsApp") ||
-                      msg.text.includes("below")) && (
-                      <div className="mt-2">
-                        <Link
-                          href="https://wa.me/917860225993?text=Hi%20InfraVibeTech%2C%20I%20need%20some%20help!"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 bg-green-500 text-white px-3 py-1 rounded-lg text-xs font-semibold hover:bg-green-600 transition"
-                        >
-                          <MessageCircle size={14} />
-                          Chat on WhatsApp
-                        </Link>
-                      </div>
+                    {msg.text.includes("WhatsApp") && (
+                      <Link
+                        href="https://wa.me/917860225993"
+                        target="_blank"
+                        className="inline-flex mt-2 items-center gap-1 bg-green-500 text-white px-3 py-1 rounded-lg text-xs"
+                      >
+                        <MessageCircle size={14} />
+                        WhatsApp Now
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -190,18 +166,18 @@ export default function ChatBot() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Options */}
-            <div className="relative z-10 border-t border-white/20 p-2 grid grid-cols-2 gap-2 bg-white/50 backdrop-blur-md">
+            {/* Quick Buttons */}
+            <div className="grid grid-cols-2 gap-2 p-2 border-t">
               {[
                 "About InfraVibeTech",
                 "Our Services",
-                "Get a Quote",
+                "Get Free Demo",
                 "Contact Team",
               ].map((opt) => (
                 <button
                   key={opt}
                   onClick={() => handleOption(opt)}
-                  className="bg-white/70 hover:bg-white/90 text-gray-800 text-xs sm:text-sm py-2 px-2 rounded-xl transition font-medium shadow-sm hover:shadow-md"
+                  className="bg-gray-100 hover:bg-gray-200 text-xs py-2 rounded-xl"
                 >
                   {opt}
                 </button>

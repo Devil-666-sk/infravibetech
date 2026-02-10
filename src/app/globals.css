@@ -290,3 +290,14 @@ h3 {
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
+
+.footer-title {
+  @apply text-white font-semibold mb-4;
+}
+
+.social-btn {
+  @apply h-10 w-10 rounded-full bg-slate-800 flex items-center justify-center 
+         text-gray-300 hover:text-white hover:bg-cyan-500 
+         transition-all duration-300 shadow-md hover:scale-110;
+}
+
