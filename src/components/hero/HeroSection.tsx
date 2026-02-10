@@ -1,119 +1,91 @@
-"use client";
-import { motion } from "framer-motion";
-
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen bg-gradient-to-b from-white to-blue-50 pt-28 pb-16">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        
-        {/* LEFT SIDE */}
-        <div className="order-1 md:order-1 animate-fadeInUp">
-          <p className="text-blue-600 font-semibold mb-3 uppercase tracking-wide">
-            Complete IT & Digital Business Solutions
-          </p>
+    <section className="relative pt-24 pb-20 bg-gradient-to-br from-white via-blue-50 to-cyan-50 overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
 
-          {/* ✅ Animated Line */}
-          <motion.h1
-            className="text-4xl md:text-6xl font-bold leading-tight mb-6"
-            animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-              backgroundSize: "200%",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            One Partner For All Your
-            <span className="block text-blue-600">
-              Tech & Marketing Needs
-            </span>
-          </motion.h1>
+    {/* LEFT CONTENT */}
+    <div>
+      <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+        <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+          One Partner For All
+        </span>
+        <br />
+        Your <span className="text-gray-900">Tech & Marketing</span>
+        <br />
+        <span className="text-blue-600">Needs</span>
+      </h1>
 
-          <p className="text-gray-600 text-lg mb-8">
-            InfraVibeTech helps businesses with IT support, laptop sales, repairs, 
-            AMC services, and powerful digital marketing to generate leads and growth.
-          </p>
+      <p className="mt-6 text-gray-600 text-lg leading-relaxed max-w-xl">
+        InfraVibe Tech helps businesses grow with reliable IT support, laptop & printer services, AMC solutions, and result-driven digital marketing — all under one roof.
+        <span className="block mt-2 font-medium text-gray-800">
+          Serving <span className="text-blue-600 font-semibold">Tricity (Chandigarh, Mohali, Panchkula)</span> & nearby areas with on-site support, and delivering digital services <span className="text-blue-600 font-semibold">across India.</span>
+        </span>
+      </p>
 
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="#services"
-              className="px-8 py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-md hover:bg-blue-700 transition"
-            >
-              View All Services
-            </a>
+      {/* TRUST BULLETS */}
+      <div className="grid grid-cols-2 gap-4 mt-6 text-sm">
+        <div className="flex items-center gap-2">✅ <span>5+ Years Experience</span></div>
+        <div className="flex items-center gap-2">✅ <span>150+ Happy Clients</span></div>
+        <div className="flex items-center gap-2">✅ <span>On-Call IT Support</span></div>
+        <div className="flex items-center gap-2">✅ <span>Transparent Pricing</span></div>
+      </div>
 
-            <a
-              href="tel:7860225993"
-              className="px-8 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-100 transition"
-            >
-              Talk to Expert
-            </a>
-          </div>
+      {/* CTA BUTTONS */}
+      <div className="flex flex-wrap gap-4 mt-8">
+        <a
+          href="/services"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
+        >
+          View All Services
+        </a>
+        <a
+          href="tel:7860225993"
+          className="px-6 py-3 rounded-xl border border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 transition"
+        >
+          Talk to an Expert
+        </a>
+      </div>
+    </div>
 
-          <div className="mt-8 flex flex-wrap gap-6 text-sm text-gray-500">
-            <span>✔ Fast Technical Support</span>
-            <span>✔ Business-Focused Solutions</span>
-            <span>✔ Free Demo Checkup</span>
-          </div>
+    {/* RIGHT SERVICE CARD */}
+    <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/40">
+      <h3 className="text-2xl font-bold mb-5 text-gray-900">
+        Our Professional Services
+      </h3>
+
+      <div className="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <h4 className="font-semibold text-blue-600 mb-2">⚙ Technical Services</h4>
+          <ul className="space-y-1 text-gray-700">
+            <li>• Laptop & PC Repair</li>
+            <li>• Printer Repair</li>
+            <li>• AMC (Annual Maintenance)</li>
+            <li>• On-Call IT Support</li>
+          </ul>
+
+          <h4 className="font-semibold text-blue-600 mt-4 mb-2">🌐 Digital Marketing</h4>
+          <ul className="space-y-1 text-gray-700">
+            <li>• Website Design & Development</li>
+            <li>• SEO (On & Off Page)</li>
+            <li>• Social Media Marketing</li>
+            <li>• Lead Generation</li>
+          </ul>
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="order-2 md:order-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-8 animate-fadeInUp">
-          
-          {/* ✅ Animated Services Heading */}
-          <motion.h3
-            className="text-xl font-semibold mb-6"
-            animate={{ backgroundPositionX: "200%" }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,#00ffff,#3b82f6,#14b8a6,#00ffff)",
-              backgroundSize: "200%",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Our Professional Services
-          </motion.h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 text-sm">
-
-            <div>
-              <p className="font-semibold text-gray-800 mb-2">🛠 Technical Services</p>
-              <ul className="space-y-1">
-                <li>• Laptop & PC Repair</li>
-                <li>• Printer Repair</li>
-                <li>• AMC (Annual Maintenance)</li>
-                <li>• Technical Support</li>
-                <li>• On-Call IT Support</li>
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-semibold text-gray-800 mb-2">💻 Sales Services</p>
-              <ul className="space-y-1">
-                <li>• New Laptop & PC Sales</li>
-                <li>• Printer Sales</li>
-                <li>• Refurbished Laptops & PC</li>
-                <li>• Computer on Rent</li>
-              </ul>
-            </div>
-
-            <div className="sm:col-span-2">
-              <p className="font-semibold text-gray-800 mb-2">🌐 Digital Marketing</p>
-              <ul className="space-y-1 sm:grid sm:grid-cols-2 sm:gap-1">
-                <li>• Website Design & Development</li>
-                <li>• SEO Optimization (On & Off Page)</li>
-                <li>• Social Media Marketing</li>
-                <li>• Lead Generation Campaigns</li>
-              </ul>
-            </div>
-
-          </div>
+        <div>
+          <h4 className="font-semibold text-blue-600 mb-2">💻 Sales Services</h4>
+          <ul className="space-y-1 text-gray-700">
+            <li>• New Laptop & PC Sales</li>
+            <li>• Refurbished Systems</li>
+            <li>• Printer Sales</li>
+            <li>• Computer on Rent</li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+
+  </div>
+</section>
+
   );
 }
