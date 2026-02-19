@@ -1,173 +1,119 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { ExternalLink, CheckCircle } from "lucide-react";
 
 const projects = [
   {
-    title: "Tathastu Realtor – Real Estate Website & Branding",
-    category: "Web Design & Digital Marketing",
-    description:
-      "A complete real estate website solution for Tathastu Realtor featuring dynamic property listings, Google-integrated maps, and a strong branding campaign for Zirakpur’s Silver City project.",
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-    link: "#",
+    title: "Local Business Website",
+    category: "Website Development",
+    result: "Online presence established",
+    desc: "Designed a professional business website with mobile optimization and SEO setup for better visibility.",
   },
   {
-    title: "Silver City Zirakpur – Property Microsite + SEO",
-    category: "Landing Page + SEO Optimization",
-    description:
-      "Developed a fast-loading property microsite with SEO optimization and local Google ranking strategy for Zirakpur’s premium real estate project.",
-    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
-    link: "#",
+    title: "Retail Store SEO Setup",
+    category: "SEO Optimization",
+    result: "Improved Google ranking",
+    desc: "On-page SEO, keyword targeting, and Google Business Profile optimization for local reach.",
   },
   {
-    title: "TechSmart Computers – Refurbished Laptop Store",
-    category: "E-Commerce + Web Development",
-    description:
-      "Designed an online store for refurbished laptops with product filters, pricing integration, and responsive UI for better user experience and sales conversion.",
-    img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
-    link: "#",
+    title: "Startup Branding Kit",
+    category: "Branding",
+    result: "Professional brand identity",
+    desc: "Logo, color theme, and social media creatives designed for consistent brand presence.",
   },
   {
-    title: "Elite Fitness Hub – Social Media & Ad Campaign",
-    category: "Social Media Marketing",
-    description:
-      "Managed creative social media campaigns, fitness branding, and lead generation ads to increase gym memberships by 140% in 2 months.",
-    img: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0642",
-    link: "#",
+    title: "Laptop Service Campaign",
+    category: "Lead Generation",
+    result: "Increased service inquiries",
+    desc: "Ran local ads and WhatsApp lead funnel to generate repair service customers.",
   },
   {
-    title: "EduLift Institute – Website + Lead Generation",
-    category: "Web Development & Marketing",
-    description:
-      "Developed a responsive education institute website integrated with automated lead capture and WhatsApp inquiry system, driving 3x more enrollments.",
-    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7",
-    link: "#",
+    title: "Social Media Growth",
+    category: "Digital Marketing",
+    result: "Higher engagement",
+    desc: "Content strategy + ad creatives that boosted reach and engagement for a local brand.",
   },
   {
-    title: "City Laptop Care – Repair & Service Portal",
-    category: "Service Website Development",
-    description:
-      "Built a complete laptop and PC repair service website for online appointment booking, live chat support, and Google review integration.",
-    img: "https://images.unsplash.com/photo-1581093588401-22e8c5f62f4d",
-    link: "#",
-  },
-  {
-    title: "Panipat Real Homes – Real Estate Landing Page",
-    category: "Landing Page Design + SEO",
-    description:
-      "Developed a modern real estate landing page optimized for Facebook & Google ads with integrated lead tracking and CRM setup.",
-    img: "https://images.unsplash.com/photo-1600585154207-4f1e9a9b1a9c",
-    link: "#",
-  },
-  {
-    title: "Infra VibeTech – Corporate Portfolio Website",
-    category: "Corporate Branding + Web Design",
-    description:
-      "Designed and developed Infra VibeTech’s official portfolio site featuring premium gradient UI, glass morphic effects, SEO structure, and animation-driven UX.",
-    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    link: "#",
+    title: "Business Website Redesign",
+    category: "UI/UX Upgrade",
+    result: "Better user experience",
+    desc: "Modern redesign focusing on speed, mobile responsiveness, and conversion layout.",
   },
 ];
 
-export default function ProjectsPage() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    speed: 800,
-    autoplaySpeed: 3500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
-    ],
-  };
-
+export default function ProjectsSection() {
   return (
-    <section className="min-h-screen bg-premium pt-28 pb-16 px-6 sm:px-10 md:px-16 font-[Poppins]">
-      <div className="text-center mb-12">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 bg-clip-text text-transparent"
-        >
-          Our Client Projects & Success Stories
-        </motion.h1>
-        <p className="text-gray-400 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-          Explore how <strong>Infra VibeTech</strong> has helped businesses grow
-          with web design, marketing, and IT solutions — from real estate to tech.
+    <section className="w-full py-20 bg-gradient-to-b from-white to-blue-50 px-4 sm:px-6 md:px-16">
+      <div className="max-w-7xl mx-auto text-center mb-16">
+        <p className="text-sm uppercase tracking-widest text-blue-600 font-semibold mb-3">
+          Our Work
+        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Projects That Build Trust
+        </h2>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          We deliver practical digital and technical solutions that help
+          businesses grow with confidence.
         </p>
       </div>
 
-      <Slider {...settings}>
-        {projects.map((proj, index) => (
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {projects.map((project, i) => (
           <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true }}
-            className="px-4"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl border border-gray-100 p-6 transition-all duration-300"
           >
-            <div
-              className="group relative bg-white/10 border border-white/20 rounded-2xl backdrop-blur-xl 
-                          shadow-[0_0_20px_rgba(0,200,150,0.15)] overflow-hidden 
-                          hover:shadow-[0_0_35px_rgba(0,200,150,0.3)] transition-all duration-500"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={proj.img}
-                  alt={proj.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
-              </div>
+            <p className="text-xs font-semibold text-blue-600 mb-2 uppercase">
+              {project.category}
+            </p>
 
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-white mb-1">
-                  {proj.title}
-                </h3>
-                <p className="text-xs text-green-400 font-medium mb-2">
-                  {proj.category}
-                </p>
-                <p className="text-gray-300 text-sm mb-4">
-                  {proj.description}
-                </p>
-                <a
-                  href={proj.link}
-                  target="_blank"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 hover:brightness-125"
-                >
-                  View Project <ExternalLink size={16} />
-                </a>
-              </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
+              {project.title}
+            </h3>
+
+            <p className="text-gray-600 text-sm mb-4">{project.desc}</p>
+
+            <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
+              <CheckCircle size={16} />
+              {project.result}
             </div>
           </motion.div>
         ))}
-      </Slider>
+      </div>
 
-      <div className="text-center mt-16">
-        <motion.a
-          href="/contact"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-white text-sm sm:text-base
-          bg-gradient-to-r from-green-400 via-blue-400 to-teal-400
-          shadow-[0_0_25px_rgba(0,200,150,0.4)]
-          hover:shadow-[0_0_40px_rgba(0,200,150,0.6)]
-          transition-all duration-300"
+      {/* Trust Stats */}
+      <div className="mt-20 grid sm:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+        <div>
+          <h3 className="text-3xl font-bold text-blue-600">50+</h3>
+          <p className="text-gray-600">Projects Delivered</p>
+        </div>
+        <div>
+          <h3 className="text-3xl font-bold text-blue-600">98%</h3>
+          <p className="text-gray-600">Client Satisfaction</p>
+        </div>
+        <div>
+          <h3 className="text-3xl font-bold text-blue-600">24/7</h3>
+          <p className="text-gray-600">Support Available</p>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="mt-16 text-center">
+        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">
+          Let’s Build Something Great for Your Business
+        </h3>
+
+        <a
+          href="tel:7860225993"
+          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
         >
-          Start Your Project With Us 🚀
-        </motion.a>
+          Start Your Project <ExternalLink size={18} />
+        </a>
       </div>
     </section>
   );

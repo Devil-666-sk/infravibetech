@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 
 const COOKIE_NAME = "infravibe_cookie_consent";
 type ConsentValue = "accepted" | "rejected" | "unknown";
@@ -47,43 +48,33 @@ export default function CookieConsent() {
     setVisible(false);
   }
 
-  function openSettings() {
-    window.location.href = "/privacy";
-  }
-
   if (!visible) return null;
 
   return (
     <div
       aria-live="polite"
-      className="fixed left-4 right-4 md:left-8 md:right-auto md:bottom-8 bottom-6 z-50 flex flex-col md:flex-row md:items-center gap-4 p-4 md:p-5 max-w-3xl shadow-2xl rounded-2xl bg-gradient-to-r from-white/90 to-white/60 backdrop-blur-md border border-white/20 transition-all duration-300 ease-in-out"
-      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.1)" }}
+      className="fixed bottom-6 left-4 right-4 md:left-8 md:right-auto z-50 flex flex-col md:flex-row items-center gap-4 p-5 max-w-3xl mx-auto bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl animate-slideUp"
+      style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.15)" }}
     >
+      {/* Content */}
       <div className="flex-1 min-w-0">
         <h3
-          className="text-base md:text-lg font-semibold text-slate-800"
+          className="text-lg md:text-xl font-semibold text-slate-900"
           style={{ fontFamily: "Poppins, Montserrat, sans-serif" }}
         >
-          InfraVibe uses cookies
+          We use cookies 🍪
         </h3>
-        <p className="text-sm md:text-base text-slate-600 mt-1 leading-snug">
-          We use cookies to improve your experience, analyse traffic, and
-          personalise content. You can accept all or manage your preferences.
+        <p className="text-sm md:text-base text-slate-700 mt-1 leading-snug">
+          InfraVibe Tech uses cookies to enhance your experience, analyze traffic, 
+          and deliver personalized content. You can accept or reject cookies below.
         </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 w-full md:w-auto">
-        <button
-          onClick={openSettings}
-          className="w-full sm:w-auto px-4 py-2 rounded-lg text-sm border border-transparent text-slate-700 hover:underline transition"
-          aria-label="Manage cookie settings"
-        >
-          Settings
-        </button>
-
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full md:w-auto mt-3 md:mt-0">
         <button
           onClick={rejectAll}
-          className="w-full sm:w-auto px-4 py-2 rounded-lg text-sm bg-white/70 hover:bg-white/80 border border-white/10 text-slate-800 transition"
+          className="w-full sm:w-auto px-4 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 transition-all font-medium"
           aria-label="Reject cookies"
         >
           Reject
@@ -91,7 +82,7 @@ export default function CookieConsent() {
 
         <button
           onClick={acceptAll}
-          className="w-full sm:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-500 to-cyan-400 text-white shadow-lg hover:scale-[1.03] transform transition duration-200"
+          className="w-full sm:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg hover:scale-[1.03] transform transition duration-200"
           aria-label="Accept cookies"
         >
           Accept

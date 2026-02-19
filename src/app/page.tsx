@@ -8,7 +8,7 @@ import MissionVisionSection from "@/components/missionvision/MissionVisionSectio
 import TestimonialsSection from "@/components/testimonials/TestimonialsSection";
 import FAQSection from "@/components/faq/FAQSection";
 import OurProcess from "@/components/ourprocess/OurProcess";
-// import ContactUs from "@/components/contactus/ContactUs";
+import ContactUs from "@/components/contactus/ContactUs";
 import Footer from "@/components/footer/Footer";
 import ProjectsPage from "@/components/project/ProjectsPage";
 import HeroSection from "../components/hero/HeroSection";
@@ -21,13 +21,13 @@ export default function Home() {
     <WhyChooseUs />
     <ServicesSection />
     {/* <ProjectsPage /> */}
-    {/* <AboutSection />     */}
-    {/* <MissionVisionSection /> */}
+    <AboutSection />    
+    <MissionVisionSection />
     <OurProcess />
-    {/* <TestimonialsSection /> */}
-    {/* <FAQSection /> */}
+    <TestimonialsSection />
+    <FAQSection />
     
-    {/* <ContactUs /> */}
+    <ContactUs />
     <Footer />
     {/* <FloatingActions /> */}
     
