@@ -177,8 +177,8 @@ export default function RootLayout({
       >
         {children}
 
-       
-
+        
+        <FloatingActions />     
         <CookieConsent />
       </body>
     </html>

@@ -3,6 +3,9 @@ import HomeSection from "@/components/hero/HeroSection";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import ContactUs from "@/components/contactus/ContactUs";
+import FAQSection from "@/components/faq/FAQSection";
+import OurProcess from "@/components/ourprocess/OurProcess";
+import TestimonialsCarousel from "@/components/testimonials/TestimonialsSection";
 
 export const metadata: Metadata = {
   title:
@@ -76,6 +79,9 @@ export default function ContactUsPage() {
 
       <Navbar />
       <HomeSection />
+      <OurProcess />
+      <FAQSection />
+      <TestimonialsCarousel />
       <ContactUs />
       <Footer />
     </>

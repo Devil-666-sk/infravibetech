@@ -38,9 +38,10 @@
 /* ---------------------------
    🧱 Base & SEO Typography
 --------------------------- */
-html {
+/* html {
   scroll-behavior: smooth;
-}
+} */
+
 
 body {
   background: var(--background);

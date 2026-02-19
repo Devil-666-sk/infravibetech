@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Minus, Maximize, Send } from "lucide-react";
+import { X, Minus, Maximize, Send, Bot } from "lucide-react";
 
 type Step = 0 | 1 | 2;
 
@@ -213,7 +213,7 @@ export default function WhatsAppStyleChatbot() {
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
           aria-label="Maximize Chatbot"
         >
-          <Maximize />
+           <Bot size={26} />
         </button>
       )}
 
@@ -223,7 +223,7 @@ export default function WhatsAppStyleChatbot() {
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
           aria-label="Open Chatbot"
         >
-          💬
+          <Bot size={26} />
         </button>
       )}
 

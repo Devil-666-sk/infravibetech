@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import HeroSection from "@/components/hero/HeroSection";
 import Navbar from "@/components/navbar/Navbar";
 import WhyChooseUs from "@/components/whychoose/WhyChooseUs";
+import OurProcess from "@/components/ourprocess/OurProcess";
+import ContactUs from "@/components/contactus/ContactUs";
+import Footer from "@/components/footer/Footer";
+import Test from "@/models/Test";
+import TestimonialsCarousel from "@/components/testimonials/TestimonialsSection";
+import FAQSection from "@/components/faq/FAQSection";
 
 export const metadata: Metadata = {
   title:
@@ -63,6 +69,11 @@ export default function WhyChooseUsPage() {
       <Navbar />
       <HeroSection />
       <WhyChooseUs />
+      <OurProcess />
+      <TestimonialsCarousel />
+      <FAQSection />
+      <ContactUs />
+      <Footer />
     </>
   );
 }

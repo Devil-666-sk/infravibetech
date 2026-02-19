@@ -34,7 +34,7 @@ export default function Footer() {
             and high-performance digital marketing for modern businesses.
           </p>
 
-          <p className="mt-4 text-xs text-gray-500">
+          <p className="mt-4 text-cyan-600 font-semibold">
             GSTIN: 03GTXPK5286G1Z1
           </p>
         </div>

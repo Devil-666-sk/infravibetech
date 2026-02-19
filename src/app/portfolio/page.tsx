@@ -4,6 +4,10 @@ import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import AboutSection from "@/components/about/AboutSection";
 import ProjectsPage from "@/components/portfolio/PortfolioSection";
+import OurProcess from "@/components/ourprocess/OurProcess";
+import FAQSection from "@/components/faq/FAQSection";
+import ContactUs from "@/components/contactus/ContactUs";
+import TestimonialsCarousel from "@/components/testimonials/TestimonialsSection";
 
 export const metadata: Metadata = {
   title:
@@ -63,7 +67,11 @@ export default function PortfolioPage() {
       <Navbar />
       <HomeSection />
       <ProjectsPage />
+      <OurProcess />
       <AboutSection />
+      <FAQSection />
+      <TestimonialsCarousel />
+      <ContactUs />
       <Footer />
     </>
   );
