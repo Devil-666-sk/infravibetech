@@ -208,20 +208,20 @@ export default function WhatsAppStyleChatbot() {
 
       {/* Floating buttons */}
       {minimized && (
-        <button
+        <button aria-label="Maximize Chatbot"
           onClick={() => setMinimized(false)}
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
-          aria-label="Maximize Chatbot"
+          
         >
            <Bot size={26} />
         </button>
       )}
 
       {!open && (
-        <button
+        <button  aria-label="Open Chatbot"
           onClick={() => { setOpen(true); setMinimized(false); }}
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
-          aria-label="Open Chatbot"
+         
         >
           <Bot size={26} />
         </button>
