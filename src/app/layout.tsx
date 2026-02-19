@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import Script from "next/script";
 import CookieConsent from "@/components/cookie/CookieConsent";
 import FloatingActions from "@/components/floatingactions/FloatingActions";
 
@@ -134,34 +134,36 @@ export default function RootLayout({
         <meta name="ICBM" content="30.6043045, 76.8353311" />
 
         {/* Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-MCV6EGCKKX"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-MCV6EGCKKX');
+       <Script
+  src="https://www.googletagmanager.com/gtag/js?id=G-MCV6EGCKKX"
+  strategy="lazyOnload"
+/>
 
-              function trackCall() {
-                gtag('event', 'click_to_call', {
-                  event_category: 'engagement',
-                  event_label: 'phone_call'
-                });
-              }
+<Script id="google-analytics" strategy="lazyOnload">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
 
-              function trackWhatsApp() {
-                gtag('event', 'click_whatsapp', {
-                  event_category: 'engagement',
-                  event_label: 'whatsapp_message'
-                });
-              }
-            `,
-          }}
-        />
+    gtag('js', new Date());
+    gtag('config', 'G-MCV6EGCKKX');
+
+    window.trackCall = function () {
+      gtag('event', 'click_to_call', {
+        event_category: 'engagement',
+        event_label: 'phone_call'
+      });
+    };
+
+    window.trackWhatsApp = function () {
+      gtag('event', 'click_whatsapp', {
+        event_category: 'engagement',
+        event_label: 'whatsapp_message'
+      });
+    };
+  `}
+</Script>
+
 
         {/* Schema */}
         <script

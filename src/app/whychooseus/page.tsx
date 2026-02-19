@@ -5,7 +5,6 @@ import WhyChooseUs from "@/components/whychoose/WhyChooseUs";
 import OurProcess from "@/components/ourprocess/OurProcess";
 import ContactUs from "@/components/contactus/ContactUs";
 import Footer from "@/components/footer/Footer";
-import Test from "@/models/Test";
 import TestimonialsCarousel from "@/components/testimonials/TestimonialsSection";
 import FAQSection from "@/components/faq/FAQSection";
 
