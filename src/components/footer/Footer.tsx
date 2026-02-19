@@ -97,16 +97,16 @@ export default function Footer() {
 
           {/* Social Icons */}
           <div className="flex gap-4 mt-6">
-            <a href="https://www.linkedin.com/company/infravibe-tech/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition">
+            <a href="https://www.linkedin.com/company/infravibe-tech/" target="_blank" aria-label="InfraVibe Tech on LinkedIn" rel="noopener noreferrer" className="hover:text-blue-600 transition">
               <Linkedin size={20} />
             </a>
-            <a href="https://www.instagram.com/infra_vibe_tech/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500 transition">
+            <a href="https://www.instagram.com/infra_vibe_tech/" target="_blank" aria-label="InfraVibe Tech on Instagram" rel="noopener noreferrer" className="hover:text-pink-500 transition">
               <Instagram size={20} />
             </a>
-            <a href="https://www.facebook.com/share/1DQcUzi9PP/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">
+            <a href="https://www.facebook.com/share/1DQcUzi9PP/" target="_blank" aria-label="InfraVibe Tech on Facebook" rel="noopener noreferrer" className="hover:text-blue-500 transition">
               <Facebook size={20} />
             </a>
-            <a href="https://www.youtube.com/@infravibetech" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition">
+            <a href="https://www.youtube.com/@infravibetech" target="_blank"  aria-label="InfraVibe Tech on YouTube" rel="noopener noreferrer" className="hover:text-red-500 transition">
               <Youtube size={20} />
             </a>
           </div>

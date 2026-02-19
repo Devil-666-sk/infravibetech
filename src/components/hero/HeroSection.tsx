@@ -1,3 +1,5 @@
+"use client";
+
 export default function HeroSection() {
   return (
     <section className="relative pt-24 pb-20 bg-gradient-to-br from-white via-blue-50 to-cyan-50 overflow-hidden">
@@ -49,9 +51,9 @@ export default function HeroSection() {
 
     {/* RIGHT SERVICE CARD */}
     <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/40">
-      <h3 className="text-2xl font-bold mb-5 text-gray-900">
+      <h2 className="text-2xl font-bold mb-5 text-gray-900">
         Our Professional Services
-      </h3>
+      </h2>
 
       <div className="grid md:grid-cols-2 gap-6 text-sm">
         <div>

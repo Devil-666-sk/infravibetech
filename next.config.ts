@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ✅ Image Optimization
   images: {
     remotePatterns: [
       {
@@ -17,15 +18,26 @@ const nextConfig = {
     ],
   },
 
-  // ✅ Ignore ESLint errors during Vercel build (fixes deploy issue)
+  // ✅ Ignore ESLint errors during Vercel build
   eslint: {
     ignoreDuringBuilds: true,
   },
 
-  // ✅ Optional: Ignore TypeScript type errors during build (safe for now)
+  // ✅ Ignore TypeScript errors during build
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // ✅ Performance Optimizations
+  swcMinify: true,
+
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+
+  experimental: {
+    modern: true,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
