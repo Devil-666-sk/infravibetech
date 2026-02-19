@@ -5,6 +5,8 @@ import Footer from "@/components/footer/Footer";
 import AboutSection from "@/components/about/AboutSection";
 import ContactUs from "@/components/contactus/ContactUs";
 import TestimonialsCarousel from "@/components/testimonials/TestimonialsSection";
+import OurProcess from "@/components/ourprocess/OurProcess";
+import FAQSection from "@/components/faq/FAQSection";
 
 export const metadata: Metadata = {
   title:
@@ -79,7 +81,9 @@ export default function AboutPage() {
       <Navbar />
       <HomeSection />
       <AboutSection />
+      <OurProcess />
       <TestimonialsCarousel />
+      <FAQSection />
       <ContactUs />
       <Footer />
     </>

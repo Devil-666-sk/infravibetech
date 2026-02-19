@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, ChevronDown, Laptop, Cpu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo.webp";
 
 const DIGITAL_SERVICES = [
   { title: "Web Design & Development", href: "/services/web-development" },
@@ -47,12 +46,13 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="rounded-full p-1 bg-white shadow-md group-hover:shadow-xl transition">
             <Image
-              src={logo}
-              alt="InfraVibe Tech Logo"
-              width={42}
-              height={42}
-              className="rounded-full group-hover:scale-105 transition"
-            />
+               src="/logo.webp"
+               alt="InfraVibe Tech Logo"
+               width={42}
+               height={42}
+               priority
+               className="rounded-full w-[42px] h-[42px] object-contain transition-transform duration-300 group-hover:scale-105"
+/>
           </div>
 
           <motion.h2
