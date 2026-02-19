@@ -112,7 +112,7 @@ export default function Navbar() {
           </div>
 
           <NavItem href="/about">About</NavItem>
-          <NavItem href="/why-us">Why Us</NavItem>
+          <NavItem href="/whychooseus">Why Us</NavItem>
           <NavItem href="/portfolio">Portfolio</NavItem>
           <NavItem href="/contact">Contact</NavItem>
 
