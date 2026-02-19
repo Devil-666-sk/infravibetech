@@ -139,6 +139,7 @@ export default function ContactUs() {
     <div className="mt-4 rounded-2xl overflow-hidden shadow-lg border hover:shadow-2xl transition">
       <iframe
         src="https://www.google.com/maps?q=30.6043045,76.8353311&z=17&output=embed"
+        title="InfraVibe Tech Location"        
         width="100%"
         height="240"
         style={{ border: 0 }}
@@ -177,6 +178,7 @@ export default function ContactUs() {
               </label>
               <input
                 name="name"
+                aria-label="Full Name"
                 type="text"
                 required
                 className="w-full mt-2 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
@@ -189,6 +191,7 @@ export default function ContactUs() {
               </label>
               <input
                 name="phone"
+                aria-label="Phone Number"
                 type="tel"
                 required
                 maxLength={10}
@@ -209,6 +212,7 @@ export default function ContactUs() {
               </label>
               <textarea
                 name="message"
+                aria-label="Your Query"
                 rows={5}
                 required
                 className="w-full mt-2 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
@@ -229,6 +233,7 @@ export default function ContactUs() {
 
             <button
               type="submit"
+              aria-label="Submit Contact Form"
               disabled={loading}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl shadow-md transition disabled:opacity-60"
             >
