@@ -5,15 +5,14 @@ export async function POST(req: Request) {
   try {
     const { service, name, email, mobile, address, message } = await req.json();
 
-    // Required validation
-    if (!name || !email || !mobile || !address) {
+    if (!name || !mobile || !email) {
       return NextResponse.json(
-        { success: false, message: "All required fields missing" },
+        { success: false, message: "Name, mobile & email required" },
         { status: 400 }
       );
     }
 
-    // Gmail transporter
+    // --- Email Setup ---
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -22,34 +21,30 @@ export async function POST(req: Request) {
       },
     });
 
-    await transporter.verify();
-
+    // ✅ Admin Email (Sirf tumhe milega)
     await transporter.sendMail({
       from: `"InfraVibe Tech Website" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO,          // your receiving email
-      replyTo: email,                   // 🔥 customer email for reply
+      to: process.env.EMAIL_TO,
+      replyTo: email,
       subject: `New Enquiry from ${name} (${service})`,
       html: `
         <div style="font-family:Arial;padding:15px">
           <h2>📩 New Website Enquiry</h2>
-          <p><b>Service:</b> ${service}</p>
           <p><b>Name:</b> ${name}</p>
           <p><b>Email:</b> ${email}</p>
           <p><b>Mobile:</b> ${mobile}</p>
-          <p><b>Address:</b> ${address}</p>
-          <p><b>Message:</b><br/>${message || "N/A"}</p>
-          <hr/>
-          <p style="color:gray">Reply to this mail to contact customer directly.</p>
+          <p><b>Service:</b> ${service}</p>
+          <p><b>Message:</b><br/>${message || 'N/A'}</p>
         </div>
       `,
     });
 
     return NextResponse.json({ success: true });
 
-  } catch (error: any) {
-    console.error("MAIL ERROR:", error);
+  } catch (err: any) {
+    console.error("ERROR:", err);
     return NextResponse.json(
-      { success: false, message: "Email failed", error: error.message },
+      { success: false, message: "Email sending failed" },
       { status: 500 }
     );
   }

@@ -301,3 +301,13 @@ h3 {
          transition-all duration-300 shadow-md hover:scale-110;
 }
 
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s ease-out forwards;
+}
+
+
