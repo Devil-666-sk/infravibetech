@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Minus, Maximize, Send, Bot } from "lucide-react";
+import { X, Minus, Send, Bot } from "lucide-react";
 
 type Step = 0 | 1 | 2;
 
@@ -20,30 +20,61 @@ export default function WhatsAppStyleChatbot() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { sender: "bot", text: "Hello! I’m InfraVibe Tech Assistant 👋 How can I help you today? Please choose an option below." },
+    {
+      sender: "bot",
+      text: "Hello! I’m InfraVibe Tech Assistant 👋 How can I help you today? Please choose an option below.",
+    },
   ]);
 
   const isMobileValid = /^[6-9]\d{9}$/.test(form.mobile);
 
   const categories = [
-    { key: "technical", label: "Technical Support", services: ["Laptop & PC Repair & Service", "System Upgrade", "Installation", "AMC Maintenance"] },
-    { key: "sale", label: "Sale & Purchase", services: ["New Laptops & PCs","Laptop & PCs Rent", "Refurbished Laptops & PC"] },
-    { key: "digital", label: "Digital Services", services: ["Web Design & Development", "SEO On Page & Off Page", "Social Media Optimization", "Lead Generation", "Branding"] },
+    {
+      key: "technical",
+      label: "Technical Support",
+      services: [
+        "Laptop & PC Repair & Service",
+        "System Upgrade",
+        "Installation",
+        "AMC Maintenance",
+      ],
+    },
+    {
+      key: "sale",
+      label: "Sale & Purchase",
+      services: [
+        "New Laptops & PCs",
+        "Laptop & PCs Rent",
+        "Refurbished Laptops & PC",
+      ],
+    },
+    {
+      key: "digital",
+      label: "Digital Services",
+      services: [
+        "Web Design & Development",
+        "SEO On Page & Off Page",
+        "Social Media Optimization",
+        "Lead Generation",
+        "Branding",
+      ],
+    },
     { key: "other", label: "Others", services: ["General Inquiry"] },
   ];
 
-  // Scroll to bottom
   useEffect(() => {
     const chat = document.getElementById("chatbox");
     if (chat) chat.scrollTop = chat.scrollHeight;
   }, [messages]);
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const addMessage = (msg: Message) => {
-    setMessages(prev => [...prev, msg]);
+    setMessages((prev) => [...prev, msg]);
   };
 
   const handleCategorySelect = (cat: string) => {
@@ -52,8 +83,11 @@ export default function WhatsAppStyleChatbot() {
     setStep(1);
 
     setTimeout(() => {
-      addMessage({ sender: "bot", text: `You selected "${cat}". Please choose a service.` });
-    }, 300); 
+      addMessage({
+        sender: "bot",
+        text: `You selected "${cat}". Please choose a service.`,
+      });
+    }, 300);
   };
 
   const handleServiceSelect = (svc: string) => {
@@ -62,7 +96,10 @@ export default function WhatsAppStyleChatbot() {
     setStep(2);
 
     setTimeout(() => {
-      addMessage({ sender: "bot", text: "Great! Please provide your details." });
+      addMessage({
+        sender: "bot",
+        text: "Great! Please provide your details.",
+      });
     }, 300);
   };
 
@@ -70,7 +107,10 @@ export default function WhatsAppStyleChatbot() {
     e.preventDefault();
     if (!isMobileValid) return alert("Enter a valid mobile number");
 
-    addMessage({ sender: "user", text: `Name: ${form.name}, Mobile: ${form.mobile}, Message: ${form.message}` });
+    addMessage({
+      sender: "user",
+      text: `Name: ${form.name}, Mobile: ${form.mobile}, Message: ${form.message}`,
+    });
 
     try {
       setLoading(true);
@@ -86,11 +126,15 @@ export default function WhatsAppStyleChatbot() {
           message: form.message,
         }),
       });
+
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Failed to send");
 
       setSuccess(true);
-      addMessage({ sender: "bot", text: "✅ Submitted! We will contact you shortly." });
+      addMessage({
+        sender: "bot",
+        text: "✅ Submitted! We will contact you shortly.",
+      });
 
       setTimeout(() => {
         setStep(0);
@@ -99,10 +143,12 @@ export default function WhatsAppStyleChatbot() {
         setForm({ name: "", mobile: "", message: "" });
         setSuccess(false);
         setMessages([
-          { sender: "bot", text: "Hello! I’m InfraVibe Tech Assistant 👋 How can I help you today? Please choose an option below." }
+          {
+            sender: "bot",
+            text: "Hello! I’m InfraVibe Tech Assistant 👋 How can I help you today? Please choose an option below.",
+          },
         ]);
       }, 3000);
-
     } catch (err: any) {
       alert("Failed to send enquiry: " + (err.message || ""));
     } finally {
@@ -111,32 +157,50 @@ export default function WhatsAppStyleChatbot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-0 left-0 px-3 sm:left-auto sm:right-6 z-50 flex flex-col items-end gap-3">
       {open && !minimized && (
-        <div className="w-80 bg-white rounded-2xl shadow-2xl p-3 flex flex-col gap-2 relative animate-slideUp max-h-[500px] overflow-y-auto" id="chatbox">
-          {/* Header */}
+        <div
+          className="w-full sm:w-80 max-w-[420px] bg-white rounded-2xl shadow-2xl p-3 flex flex-col gap-2 relative animate-slideUp max-h-[500px] overflow-y-auto overflow-x-hidden"
+          id="chatbox"
+        >
           <div className="flex justify-between items-center mb-2 border-b border-gray-200 pb-2">
-            <span className="font-semibold text-slate-900">InfraVibe Tech Assistant</span>
+            <span className="font-semibold text-slate-900">
+              InfraVibe Tech Assistant
+            </span>
             <div className="flex gap-2">
-              <button onClick={() => setMinimized(true)} className="text-gray-500 hover:text-gray-900" aria-label="Minimize Chatbot"><Minus /></button>
-              <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-900" aria-label="Close Chatbot"><X /></button>
+              <button
+                onClick={() => setMinimized(true)}
+                className="text-gray-500 hover:text-gray-900"
+              >
+                <Minus />
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-gray-500 hover:text-gray-900"
+              >
+                <X />
+              </button>
             </div>
           </div>
 
-          {/* Messages */}
           <div className="flex flex-col gap-2">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`p-2 rounded-xl max-w-[80%] text-sm ${msg.sender === "bot" ? "self-start bg-blue-100 text-slate-900" : "self-end bg-blue-600 text-white"}`}>
+              <div
+                key={idx}
+                className={`p-2 rounded-xl max-w-[80%] text-sm break-words ${
+                  msg.sender === "bot"
+                    ? "self-start bg-blue-100 text-slate-900"
+                    : "self-end bg-blue-600 text-white"
+                }`}
+              >
                 {msg.text}
               </div>
             ))}
 
-            {/* Step options */}
             {step === 0 && !success && (
               <div className="flex flex-col gap-2 mt-2">
-                {categories.map(cat => (
+                {categories.map((cat) => (
                   <button
-                  aria-label= "Select category"
                     key={cat.key}
                     className="bg-gray-100 hover:bg-gray-200 text-slate-800 py-2 rounded-lg text-sm"
                     onClick={() => handleCategorySelect(cat.label)}
@@ -149,23 +213,17 @@ export default function WhatsAppStyleChatbot() {
 
             {step === 1 && !success && (
               <div className="flex flex-col gap-2 mt-2">
-                {categories.find(c => c.label === category)?.services.map(svc => (
-                  <button
-                    key={svc}
-                    aria-label="Select service"
-                    className="bg-gray-100 hover:bg-gray-200 text-slate-800 py-2 rounded-lg text-sm"
-                    onClick={() => handleServiceSelect(svc)}
-                  >
-                    {svc}
-                  </button>
-                ))}
-                <button
-                  aria-label="Back to main categories"
-                  className="bg-gray-200 hover:bg-gray-300 text-slate-700 py-1 rounded-lg text-xs mt-2"
-                  onClick={() => { setStep(0); setCategory(""); setService(""); addMessage({ sender: "user", text: "Back to main categories" }); }}
-                >
-                  ← Back to main categories
-                </button>
+                {categories
+                  .find((c) => c.label === category)
+                  ?.services.map((svc) => (
+                    <button
+                      key={svc}
+                      className="bg-gray-100 hover:bg-gray-200 text-slate-800 py-2 rounded-lg text-sm"
+                      onClick={() => handleServiceSelect(svc)}
+                    >
+                      {svc}
+                    </button>
+                  ))}
               </div>
             )}
 
@@ -201,7 +259,11 @@ export default function WhatsAppStyleChatbot() {
                   disabled={loading}
                   className="mt-2 px-3 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  {loading ? "Sending..." : <><Send size={16} /> Submit</>}
+                  {loading ? "Sending..." : (
+                    <>
+                      <Send size={16} /> Submit
+                    </>
+                  )}
                 </button>
               </form>
             )}
@@ -209,22 +271,22 @@ export default function WhatsAppStyleChatbot() {
         </div>
       )}
 
-      {/* Floating buttons */}
       {minimized && (
-        <button aria-label="Maximize Chatbot"
+        <button
           onClick={() => setMinimized(false)}
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
-          
         >
-           <Bot size={26} />
+          <Bot size={26} />
         </button>
       )}
 
       {!open && (
-        <button  aria-label="Open Chatbot"
-          onClick={() => { setOpen(true); setMinimized(false); }}
+        <button
+          onClick={() => {
+            setOpen(true);
+            setMinimized(false);
+          }}
           className="h-14 w-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transform transition"
-         
         >
           <Bot size={26} />
         </button>

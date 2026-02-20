@@ -126,7 +126,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-
+        <meta name="msvalidate.01" content="AB4FD1F69D88FBD00CE1829D91D38BE1" />
         {/* GEO SEO */}
         <meta name="geo.region" content="IN-PB" />
         <meta name="geo.placename" content="Zirakpur" />
