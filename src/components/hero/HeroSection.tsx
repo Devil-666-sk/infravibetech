@@ -3,7 +3,7 @@
 export default function HeroSection() {
   return (
     <section className="relative pt-24 pb-20 bg-gradient-to-br from-white via-blue-50 to-cyan-50 overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
 
     {/* LEFT CONTENT */}
     <div>
@@ -18,7 +18,9 @@ export default function HeroSection() {
       </h1>
 
       <p className="mt-6 text-gray-600 text-lg leading-relaxed max-w-xl">
-        InfraVibe Tech helps businesses grow with reliable IT support, laptop & printer services, AMC solutions, and result-driven digital marketing — all under one roof.
+        InfraVibe Tech helps businesses grow with reliable IT support,
+        laptop & printer services, AMC solutions, and result-driven
+        digital marketing — all under one roof.
         <span className="block mt-2 font-medium text-gray-800">
           Serving <span className="text-blue-600 font-semibold">Tricity (Chandigarh, Mohali, Panchkula)</span> & nearby areas with on-site support, and delivering digital services <span className="text-blue-600 font-semibold">across India.</span>
         </span>
@@ -55,35 +57,35 @@ export default function HeroSection() {
         Our Professional Services
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-6 text-sm">
-        <div>
-          <h4 className="font-semibold text-blue-600 mb-2">⚙ Technical Services</h4>
-          <ul className="space-y-1 text-gray-700">
-            <li>• Laptop & PC Repair</li>
-            <li>• Printer Repair</li>
-            <li>• AMC (Annual Maintenance)</li>
-            <li>• On-Call IT Support</li>
-          </ul>
+     <div className="grid md:grid-cols-2 gap-6 text-sm">
+  <div>
+    <h3 className="font-semibold text-md  text-blue-600 mb-2">⚙ Technical Services</h3>
+    <ul className="space-y-1 text-gray-700">
+      <li>• Laptop & PC Repair</li>
+      <li>• Printer Repair</li>
+      <li>• AMC (Annual Maintenance)</li>
+      <li>• On-Call IT Support</li>
+    </ul>
 
-          <h4 className="font-semibold text-blue-600 mt-4 mb-2">🌐 Digital Marketing</h4>
-          <ul className="space-y-1 text-gray-700">
-            <li>• Website Design & Development</li>
-            <li>• SEO (On & Off Page)</li>
-            <li>• Social Media Marketing</li>
-            <li>• Lead Generation</li>
-          </ul>
-        </div>
+    <h3 className="font-semibold text-md  text-blue-600 mt-4 mb-2">🌐 Digital Marketing</h3>
+    <ul className="space-y-1 text-gray-700">
+      <li>• Website Design & Development</li>
+      <li>• SEO (On & Off Page)</li>
+      <li>• Social Media Marketing</li>
+      <li>• Lead Generation</li>
+    </ul>
+  </div>
 
-        <div>
-          <h4 className="font-semibold text-blue-600 mb-2">💻 Sales Services</h4>
-          <ul className="space-y-1 text-gray-700">
-            <li>• New Laptop & PC Sales</li>
-            <li>• Refurbished Systems</li>
-            <li>• Printer Sales</li>
-            <li>• Computer on Rent</li>
-          </ul>
-        </div>
-      </div>
+  <div>
+    <h3 className="font-semibold text-md text-blue-600 mb-2">💻 Sales Services</h3>
+    <ul className="space-y-1 text-gray-700">
+      <li>• New Laptop & PC Sales</li>
+      <li>• Refurbished Systems</li>
+      <li>• Printer Sales</li>
+      <li>• Computer on Rent</li>
+    </ul>
+  </div>
+</div>
     </div>
 
   </div>

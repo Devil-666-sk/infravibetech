@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, ChevronDown, Laptop, Cpu } from "lucide-react";
 import Link from "next/link";
@@ -22,10 +22,15 @@ const TECH_SERVICES = [
   { title: "Technical Support", href: "/services/tech-support" },
 ];
 
+interface ServiceItem {
+  title: string;
+  href: string;
+}
+
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -42,17 +47,18 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-3">
+        
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="rounded-full p-1 bg-white shadow-md group-hover:shadow-xl transition">
             <Image
-               src="/logo.webp"
-               alt="InfraVibe Tech Logo"
-               width={42}
-               height={42}
-               priority
-               className="rounded-full w-[42px] h-[42px] object-contain transition-transform duration-300 group-hover:scale-105"
-/>
+              src="/logo.webp"
+              alt="InfraVibe Tech Logo"
+              width={42}
+              height={42}
+              priority
+              className="rounded-full w-[42px] h-[42px] object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
 
           <motion.h2
@@ -129,16 +135,16 @@ export default function Navbar() {
         <button
           className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition"
           onClick={() => setMobileOpen(true)}
+          aria-label="Open Menu"
         >
           <Menu size={26} />
         </button>
       </nav>
 
-      {/* MOBILE DRAWER MENU */}
+      {/* MOBILE DRAWER */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* OVERLAY */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.4 }}
@@ -173,7 +179,7 @@ export default function Navbar() {
                 <h3 className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                   Digital Services
                 </h3>
-                {DIGITAL_SERVICES.map((item) => (
+                {DIGITAL_SERVICES.map((item: ServiceItem) => (
                   <MobileLink key={item.title} href={item.href}>
                     {item.title}
                   </MobileLink>
@@ -184,7 +190,7 @@ export default function Navbar() {
                 <h3 className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                   Technical Services
                 </h3>
-                {TECH_SERVICES.map((item) => (
+                {TECH_SERVICES.map((item: ServiceItem) => (
                   <MobileLink key={item.title} href={item.href}>
                     {item.title}
                   </MobileLink>
@@ -205,12 +211,18 @@ export default function Navbar() {
   );
 }
 
-function NavItem({ href, children }) {
+/* ================= COMPONENTS ================= */
+
+interface NavItemProps {
+  href: string;
+  children: ReactNode;
+}
+
+function NavItem({ href, children }: NavItemProps) {
   return (
     <Link
       href={href}
-      className="relative px-3 py-2 rounded-lg text-sm font-medium
-                 transition-all duration-300 group hover:text-blue-600"
+      className="relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group hover:text-blue-600"
     >
       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-blue-500 transition-all group-hover:w-full" />
       {children}
@@ -218,7 +230,17 @@ function NavItem({ href, children }) {
   );
 }
 
-function DropdownColumn({ title, icon, items }) {
+interface DropdownColumnProps {
+  title: string;
+  icon: ReactNode;
+  items: ServiceItem[];
+}
+
+function DropdownColumn({
+  title,
+  icon,
+  items,
+}: DropdownColumnProps) {
   return (
     <div>
       <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-600">
@@ -240,7 +262,12 @@ function DropdownColumn({ title, icon, items }) {
   );
 }
 
-function MobileLink({ href, children }) {
+interface MobileLinkProps {
+  href: string;
+  children: ReactNode;
+}
+
+function MobileLink({ href, children }: MobileLinkProps) {
   return (
     <Link
       href={href}

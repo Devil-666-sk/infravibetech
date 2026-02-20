@@ -118,8 +118,8 @@ export default function WhatsAppStyleChatbot() {
           <div className="flex justify-between items-center mb-2 border-b border-gray-200 pb-2">
             <span className="font-semibold text-slate-900">InfraVibe Tech Assistant</span>
             <div className="flex gap-2">
-              <button onClick={() => setMinimized(true)} className="text-gray-500 hover:text-gray-900"><Minus /></button>
-              <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-900"><X /></button>
+              <button onClick={() => setMinimized(true)} className="text-gray-500 hover:text-gray-900" aria-label="Minimize Chatbot"><Minus /></button>
+              <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-900" aria-label="Close Chatbot"><X /></button>
             </div>
           </div>
 
@@ -136,6 +136,7 @@ export default function WhatsAppStyleChatbot() {
               <div className="flex flex-col gap-2 mt-2">
                 {categories.map(cat => (
                   <button
+                  aria-label= "Select category"
                     key={cat.key}
                     className="bg-gray-100 hover:bg-gray-200 text-slate-800 py-2 rounded-lg text-sm"
                     onClick={() => handleCategorySelect(cat.label)}
@@ -151,6 +152,7 @@ export default function WhatsAppStyleChatbot() {
                 {categories.find(c => c.label === category)?.services.map(svc => (
                   <button
                     key={svc}
+                    aria-label="Select service"
                     className="bg-gray-100 hover:bg-gray-200 text-slate-800 py-2 rounded-lg text-sm"
                     onClick={() => handleServiceSelect(svc)}
                   >
@@ -158,6 +160,7 @@ export default function WhatsAppStyleChatbot() {
                   </button>
                 ))}
                 <button
+                  aria-label="Back to main categories"
                   className="bg-gray-200 hover:bg-gray-300 text-slate-700 py-1 rounded-lg text-xs mt-2"
                   onClick={() => { setStep(0); setCategory(""); setService(""); addMessage({ sender: "user", text: "Back to main categories" }); }}
                 >
