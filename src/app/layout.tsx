@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://infravibetech.com"),
 
   title:
-    "InfraVibe Tech – IT Support, Laptop, PC & Server Sales, Web Design & Digital Marketing Company in India",
+    "InfraVibe Tech offers Web Design, SEO, Social Media Marketing, Laptop Repair, Sales and AMC services in Punjab. Empowering Businesses Digitally & Technically.",
 
   description:
     "GST registered IT company in Zirakpur providing IT Support, AMC Services, Laptop-PC-Server Sales, Repairs, Networking, CCTV Installation, Website Development, SEO & Google Ads across India.",
