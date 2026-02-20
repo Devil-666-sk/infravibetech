@@ -102,7 +102,7 @@ export default function ContactUs() {
               <div className="flex items-start gap-4">
                 <Phone className="text-blue-600 w-6 h-6 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900">Call Us</h4>
+                  <h3 className="font-semibold text-sm text-gray-900">Call Us</h3>
                   <a href="tel:7860225993" className="text-gray-600 hover:text-blue-600">
                     +91 78602 25993
                   </a>
@@ -112,7 +112,7 @@ export default function ContactUs() {
               <div className="flex items-start gap-4">
                 <Mail className="text-blue-600 w-6 h-6 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900">Email</h4>
+                  <h3 className="font-semibold text-sm text-gray-900">Email</h3>
                   <a href="mailto:info@infravibetech.com" className="text-gray-600 hover:text-blue-600">
                     info@infravibetech.com
                   </a>
@@ -123,9 +123,9 @@ export default function ContactUs() {
 <div className="flex items-start gap-4">
   <MapPin className="text-blue-600 w-6 h-6 mt-1" />
   <div className="w-full">
-    <h4 className="font-semibold text-gray-900">
+    <h3 className="font-semibold text-sm text-gray-900">
       Location
-    </h4>
+    </h3>
 
     <a
       href="https://www.google.com/maps/search/?api=1&query=30.6043045,76.8353311"

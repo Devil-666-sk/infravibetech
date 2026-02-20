@@ -134,36 +134,35 @@ export default function RootLayout({
         <meta name="ICBM" content="30.6043045, 76.8353311" />
 
         {/* Google Analytics */}
-       <Script
-  src="https://www.googletagmanager.com/gtag/js?id=G-MCV6EGCKKX"
-  strategy="lazyOnload"
-/>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-MCV6EGCKKX"
+          strategy="lazyOnload"
+        />
 
-<Script id="google-analytics" strategy="lazyOnload">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
+        <Script id="google-analytics" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
 
-    gtag('js', new Date());
-    gtag('config', 'G-MCV6EGCKKX');
+            gtag('js', new Date());
+            gtag('config', 'G-MCV6EGCKKX');
 
-    window.trackCall = function () {
-      gtag('event', 'click_to_call', {
-        event_category: 'engagement',
-        event_label: 'phone_call'
-      });
-    };
+            window.trackCall = function () {
+              gtag('event', 'click_to_call', {
+                event_category: 'engagement',
+                event_label: 'phone_call'
+              });
+            };
 
-    window.trackWhatsApp = function () {
-      gtag('event', 'click_whatsapp', {
-        event_category: 'engagement',
-        event_label: 'whatsapp_message'
-      });
-    };
-  `}
-</Script>
-
+            window.trackWhatsApp = function () {
+              gtag('event', 'click_whatsapp', {
+                event_category: 'engagement',
+                event_label: 'whatsapp_message'
+              });
+            };
+          `}
+        </Script>
 
         {/* Schema */}
         <script
@@ -177,9 +176,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* ✅ MAIN LANDMARK ADDED */}
+        <main>
+          {children}
+        </main>
 
-        
         <FloatingActions />     
         <CookieConsent />
       </body>
