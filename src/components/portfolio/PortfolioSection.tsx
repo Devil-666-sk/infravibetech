@@ -68,7 +68,6 @@ export default function PortfolioSection() {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-12">
-
           {projects.map((project, i) => {
             const Icon = project.icon;
             return (
@@ -148,48 +147,50 @@ export default function PortfolioSection() {
           </p>
         </div>
 
-        {/* SALES CONVERSION SECTION */}
-        <div className="mt-20 bg-blue-600 text-white rounded-3xl p-14 text-center shadow-2xl">
-          <h3 className="text-3xl md:text-5xl font-bold mb-6">
+        {/* ✅ IMPROVED SALES CONVERSION SECTION */}
+        <div className="mt-20 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white rounded-3xl px-6 sm:px-10 md:px-14 py-16 md:py-20 text-center shadow-2xl">
+
+          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 leading-tight">
             Ready to Turn Your Business Into a Sales Machine?
           </h3>
 
-          <p className="max-w-3xl mx-auto text-blue-100 mb-10 text-lg">
+          <p className="max-w-3xl mx-auto text-blue-100 mb-10 text-base sm:text-lg leading-relaxed">
             Most businesses lose customers due to outdated websites, weak marketing,
             and poor technical setup. InfraVibe Tech builds high-converting digital
             systems designed to generate consistent leads and measurable revenue.
           </p>
 
-          <div className="grid sm:grid-cols-3 gap-10 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12">
             <div>
-              <h4 className="text-4xl font-bold">↑ 3X</h4>
-              <p className="text-blue-100 mt-2">Lead Growth</p>
+              <h4 className="text-3xl md:text-4xl font-bold">↑ 3X</h4>
+              <p className="text-blue-200 mt-2 text-sm sm:text-base">Lead Growth</p>
             </div>
             <div>
-              <h4 className="text-4xl font-bold">↑ 65%</h4>
-              <p className="text-blue-100 mt-2">Sales Conversion Increase</p>
+              <h4 className="text-3xl md:text-4xl font-bold">↑ 65%</h4>
+              <p className="text-blue-200 mt-2 text-sm sm:text-base">Sales Conversion Increase</p>
             </div>
             <div>
-              <h4 className="text-4xl font-bold">↓ 40%</h4>
-              <p className="text-blue-100 mt-2">Operational Costs</p>
+              <h4 className="text-3xl md:text-4xl font-bold">↓ 40%</h4>
+              <p className="text-blue-200 mt-2 text-sm sm:text-base">Operational Costs</p>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
             <a
               href="tel:7860225993"
-              className="bg-white text-blue-600 px-10 py-4 rounded-2xl font-bold hover:bg-gray-100 transition shadow-lg"
+              className="bg-white text-blue-900 px-8 sm:px-10 py-3 sm:py-4 rounded-2xl font-bold hover:bg-gray-100 transition shadow-lg text-sm sm:text-base"
             >
               Call Now & Get Free Business Audit
             </a>
 
             <a
               href="/contact"
-              className="border border-white px-10 py-4 rounded-2xl font-semibold hover:bg-blue-700 transition"
+              className="border border-white px-8 sm:px-10 py-3 sm:py-4 rounded-2xl font-semibold hover:bg-white hover:text-blue-900 transition text-sm sm:text-base"
             >
               Get Custom Growth Strategy
             </a>
           </div>
+
         </div>
 
       </div>
