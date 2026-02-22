@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const DIGITAL_SERVICES = [
-  { title: "Web Design & Development", href: "/services/web-development" },
+  { title: "Web Design & Development", href: "/services/web-design-development" },
   { title: "SEO (On/Off Page)", href: "/services/seo" },
   { title: "Social Media Management & Ads", href: "/services/smm" },
   { title: "Lead Generation & Branding", href: "/services/lead-generation" },

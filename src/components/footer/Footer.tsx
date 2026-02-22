@@ -114,10 +114,33 @@ export default function Footer() {
 
       </div>
 
-      {/* Bottom */}
-      <div className="text-center mt-12 text-xs text-gray-500 border-t pt-6">
-        © {new Date().getFullYear()} InfraVibe Tech. All Rights Reserved.
-      </div>
+     {/* Bottom */}
+<div className="text-center mt-12 text-xs text-gray-500 border-t pt-6 space-y-3">
+
+  <div className="flex flex-wrap justify-center gap-4 text-sm">
+    <Link href="/terms-and-conditions" className="hover:text-cyan-600 transition">
+      Terms & Conditions
+    </Link>
+    <span>|</span>
+    <Link href="/privacy-policy" className="hover:text-cyan-600 transition">
+      Privacy Policy
+    </Link>
+    <span>|</span>
+    <Link href="/online-shopping-policy" className="hover:text-cyan-600 transition">
+      Online Shopping Policy
+    </Link>
+    <span>|</span>
+    <Link href="/return-refund-policy" className="hover:text-cyan-600 transition">
+      Return & Refund Policy
+    </Link>
+  </div>
+
+  <div>
+    © {new Date().getFullYear()} InfraVibe Tech. All Rights Reserved.
+  </div>
+
+</div>
+
     </footer>
   );
 }
